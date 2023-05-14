@@ -1,0 +1,57 @@
+<body>
+    {{> sidebars}}
+    {{> navbar}}
+</body>
+
+<h3>{{Title}}</h3>
+<style>
+    .form-control {
+        margin: 15px;
+        border-radius: 3px 3px 0 0;
+        width: 500px !important; /* Adjust the width as needed */
+    }
+
+    .table-wrapper {
+        margin-top: 100px;
+        margin-left: 5%;
+        margin-right: 5%;
+        border-radius: 3px 3px 0 0;
+        width: 30px ; 
+        /* Adjust the width as needed */
+    }
+
+    h1 {
+        background: #7522E6;
+        font-size: x-large;
+
+        
+        color: #fff;
+        padding: 16px 30px;
+
+        margin: -20px -25px 10px;
+        border-radius: 3px 3px 0 0;
+    }
+  
+</style>
+<form action="/adminreg" method="post" id="add_user" class="table-wrapper" autocomplete="off"
+    enctype="multipart/form-data">
+    <div class="form-group">
+        <h1>Set an Event_Head Profile</h1>
+        <input type="text" class="form-control" name="name" placeholder="Enter Name" required>
+        <input type="text" class="form-control" name="email" placeholder="Enter Email" required>
+        <input type="text" class="form-control" name="password" placeholder="Password" required>
+        <input type="text" class="form-control" name="cpassword" placeholder="Confirm Password" required>
+        <div>
+            <label for="image">Image:</label>
+            <input type="file" id="profile" name="profile">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-info" onclick="openPopup()">
+        <i class="fa fa-database"></i>
+        Submit
+    </button>
+    {{!-- <a href="/eventheadlists" class="btn btn-danger">
+        <i class="fa fa-list-alt"></i>
+        View All
+    </a> --}}
+</form>

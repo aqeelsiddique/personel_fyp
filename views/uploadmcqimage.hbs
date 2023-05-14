@@ -1,0 +1,54 @@
+<!-- new_question.handlebars -->
+
+<h1>Create a New Question</h1>
+
+{{#if error}}
+  <p class="error">{{error}}</p>
+{{/if}}
+
+<form action="/questions" method="post" enctype="multipart/form-data">
+<h1>Add a Questions</h1>
+    <select class="form-control" id="machine" name="select_subject" placeholder="Select subject" required="true">
+      {{#if select_subject}}
+      {{#each select_subject }}
+                  <option type="text" value="" disabled selected hidden>Select a Subject</option>
+
+      <option value={{this.name}} {{isSelected this._id ../question.select_subject.name}}>{{this.name}}</option>
+      {{/each}}
+      {{!-- {{else}}
+      {{#each select_subject}}
+      <option value={{this._id}}>{{this.name}}</option>
+      {{/each}} --}}
+      {{/if}}
+    </select>
+  <div>
+    <label for="image">Question Image:</label>
+    <input type="file" id="image" name="image" accept="image/*" required>
+  </div>
+  <div>
+    <label for="option1">Option 1:</label>
+    <input type="text" id="option1" name="option1" required>
+  </div>
+  <div>
+    <label for="option2">Option 2:</label>
+    <input type="text" id="option2" name="option2" required>
+  </div>
+  <div>
+    <label for="option3">Option 3:</label>
+    <input type="text" id="option3" name="option3" required>
+  </div>
+  <div>
+    <label for="option4">Option 4:</label>
+    <input type="text" id="option4" name="option4" required>
+  </div>
+  <div>
+    <label for="correctOption">Correct Option:</label>
+    <select id="correctOption" name="correctOption" required>
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+      <option value="3">Option 3</option>
+      <option value="4">Option 4</option>
+    </select>
+  </div>
+  <button type="submit">Create Question</button>
+</form>

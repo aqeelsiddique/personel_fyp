@@ -1,0 +1,66 @@
+<h3>{{Title}}</h3>
+<style>
+    .form-control {
+        margin: 15px;
+        border-radius: 3px 3px 0 0;
+    }
+
+    .table-wrapper {
+        margin-top: 100px;
+        margin-left: 5%;
+        margin-right: 5%;
+        border-radius: 3px 3px 0 0;
+    }
+
+    h1 {
+        background: #7522E6;
+        color: #fff;
+        padding: 16px 30px;
+        min-width: 100%;
+        margin: -20px -25px 10px;
+        border-radius: 3px 3px 0 0;
+
+    }
+</style>
+<body>
+      {{> sidebars}}
+
+       {{> navbar}}
+
+    
+</body>
+<form action="/edit/{{x.name}}?_method=put" method="POST" class="table-wrapper" enctype="multipart/form-data">
+        <input type="hidden" name="_method" value="PUT">
+{{!-- <form method="post" action="/evenheadupdate/{{this.name}}?_method=put" enctype="multipart/form-data" > --}}
+ {{!-- <input type="hidden" name="_method" value="PUT"> --}}
+{{!-- <form action="/evenheadup/{{x.name}}" method="post" id="add_user" class="table-wrapper" autocomplete="off"
+    enctype="multipart/form-data">
+    --}}
+
+    <div class="form-group">
+        <h1>Set a Even_Head Profile</h1>
+        <input type="text" value="{{x.name}}" class="form-control" name="name" placeholder="Enter Name" required>
+        <input type="text" value="{{x.email}}" class="form-control" name="email" placeholder="Enter Email " required>
+        <input type="text"  class="form-control" name="password" placeholder="Password" required>
+        <input type="text"  class="form-control" name="cpassword" placeholder="confirmPassword" required>
+        <div>
+            <input type="file" id="profile" name="profile" required>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-info" "onclick="return confirm('Are you sure to update this record ?'); >
+        <i class="fa fa-database"></i>
+        Submit
+    </button>
+    <a href="/eventheadlists" class="btn btn-danger">
+        <i class="fa fa-list-alt"> </i>
+        ViewAll
+    </a>
+    </div>
+</form>
+<div class="popup" id="popup">
+    <img src="../images/404-tick.png" alt="">
+    <h4>  Sucessfully  </h4>
+    <p>please</p>
+    <button type="button" onclick="closepopup()" required>ok</button>
+
+</div>
