@@ -1,9 +1,9 @@
 <body>
-      {{> sidebars}}
+	{{> sidebars}}
 
-       {{> navbar}}
+	{{> navbar}}
 
-    
+
 </body>
 
 <div class="container-xl">
@@ -20,7 +20,7 @@
 								Add New Question
 								<i class="material-icons">&#xE147;</i>
 							</button>
-							
+
 							{{!-- <a href="/add_Question" class="btn btn-success" data-toggle="modal"><i
 									class="material-icons">&#xE147;</i> <span>Add New Question</span></a> --}}
 							{{!-- <a href="/deltedata/{{this._id}}" class="btn btn-danger" data-toggle="modal"><i
@@ -31,7 +31,7 @@
 								Subject_Wise
 								<i class="material-icons">&#xE15C;</i>
 							</button>
-						
+
 						</form>
 
 
@@ -65,7 +65,13 @@
 								<label for="checkbox1"></label>
 							</span>
 						</td>
-						<td>{{this.ques}}</td>
+						<td>
+							{{#if this.image}}
+							<img src="/images/{{this.image}}" alt="Question Image" style="max-width: 50px; max-height: 50px;">
+							{{else}}
+							{{this.ques}}
+							{{/if}}
+						</td>
 						<td>{{this.option1}}</td>
 						<td>{{this.option2}}</td>
 						<td>{{this.option3}}</td>
@@ -73,24 +79,19 @@
 						<td>{{this.ans}}</td>
 						<td></td>
 						<td class="liststyle">
-								<a href="/update_Question/{{this.ques}}" class="fa fa-edit"
+							<a href="/update_Question/{{this.ques}}" class="fa fa-edit"
 								style="font-size:25px;color:rgb(80, 85, 87);"
 								onclick="return confirm('Are you sure to update this record ?');"></a>
 
-							{{!-- <form method="POST" action="/update_Question/{{_id}}">
-								<button class="btn" onclick="return confirm('Are you sure to update this record ?');"><i
-										class="fa fa-edit"></i></button>
-
-							</form> --}}
 							<form method="POST" action="/delete_Question/{{_id}}">
 								<button class="btn" onclick="return confirm('Are you sure to delete this record ?');"><i
 										class="fa fa-trash"></i></button>
-
 							</form>
 						</td>
 					</tr>
 					{{/each}}
 				</tbody>
+
 			</table>
 		</div>
 	</div>

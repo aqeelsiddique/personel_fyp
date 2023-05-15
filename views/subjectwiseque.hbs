@@ -50,7 +50,11 @@
                 <tbody>
         {{/if}}
                     <tr>
-                        <td>{{this.ques}}</td>
+                        <td>{{#if this.image}}
+							<img src="/images/{{this.image}}" alt="Question Image" style="max-width: 50px; max-height: 50px;">
+							{{else}}
+							{{this.ques}}
+							{{/if}}</td>
                         <td>{{this.option1}}</td>
                         <td>{{this.option2}}</td>
                         <td>{{this.option3}}</td>

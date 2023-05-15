@@ -43,6 +43,7 @@ const eventhead_list = function (req, res, next) {
       list_EventHead:list_EventHead
 
     })
+    console.log(list_EventHead)
   }) 
 // User.find().lean()
 //     .exec(function (err, list_EventHead) {

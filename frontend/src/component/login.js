@@ -12,6 +12,7 @@ const Login = () => {
     e.preventDefault();
     const res = await fetch('/logins', {
       method: 'POST',
+      
       headers: {
         'Content-Type': 'application/json',
       },
@@ -66,7 +67,8 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your Email*"
-                ></input>
+                >
+                </input>
               </div>
               <div className="form-group mt-3">
                 {/* <label>Password</label>
@@ -75,6 +77,7 @@ const Login = () => {
                                     className="form-control mt-1"   name='password'
                                     placeholder="Enter password"
                                 /> */}
+                
                 <input
                   type="password"
                   className="form-control mt-1"
@@ -93,6 +96,7 @@ const Login = () => {
                   className="btn"
                   name="signin"
                   onClick={loginUser}
+                  
                 ></input>
               </div>
             </div>
@@ -102,5 +106,4 @@ const Login = () => {
     </>
   );
 };
-
 export default Login;

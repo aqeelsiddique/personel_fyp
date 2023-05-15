@@ -3,44 +3,51 @@ const Schema = mongoose.Schema;
 // const ObjectId = require('mongodb').ObjectId;
 // const id = new ObjectId();
 const QuestionSchema = new mongoose.Schema({
-  //     select_subject: { type: Schema.Types.ObjectId, ref: 'testsubj', required: true ,
-  // },
   select_subject: { type: String, ref: 'testsubj', required: true },
   image: {
     type: String,
-    required: true
+    required: function () {
+      return !this.ques; // Image is required if no question text is provided
+    }
   },
   ques: {
     type: String,
+    required: function () {
+      return !this.image; // Question text is required if no image is provided
+    }
   },
   option1: {
     type: String,
-    image: String, // Image path or URL
+    image: String // Image path or URL
   },
   option2: {
     type: String,
-    image: String, // Image path or UR
+    image: String // Image path or URL
   },
   option3: {
     type: String,
-    image: String, // Image path or URL
+    image: String // Image path or URL
   },
   option4: {
     type: String,
-    image: String, // Image path or URL
-
+    image: String // Image path or URL
   },
   ans: {
     type: String,
-    image: String, // Image path or URL
+    required: function () {
+      return !this.correctOption; // Correct option is required if no answer text is provided
+    }
   },
   subjectId: {
     type: mongoose.Types.ObjectId,
-    ref: 'testsubj',
+    ref: 'testsubj'
   },
   correctOption: {
     type: String,
-    required: true
+    required: function () {
+      return !this.ans; // Correct option is required if no answer text is provided
+    }
   }
 });
+
 module.exports = mongoose.model('Question', QuestionSchema);

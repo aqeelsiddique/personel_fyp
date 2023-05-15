@@ -11,6 +11,7 @@ import Test from './test';
 import TeamList from './component/teams';
 import Result from './component/result';
 import { ToastContainer } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
   return (
@@ -18,10 +19,9 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="test" element={<Test />} />
-
           <Route exact path="/" element={Login} />
           <Route index element={<Login />} />
-          <Route path="main2" element={<Main2 />} />
+          <Route  path="main2" element={<Main2 />} />
           <Route path="start" element={<Start />} />
           <Route path="subject" element={<Subject />} />
           <Route path="Quiz" element={<Quiz />} />

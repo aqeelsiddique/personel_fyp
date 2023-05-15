@@ -610,14 +610,6 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
 //   });
 // });
 
-
-
-
-
-
-
-
-
 app.get("/forgot", (req, res) => {
   res.render("forgot")
 })
@@ -634,19 +626,19 @@ app.get("/imageques", (req, res) => {
 app.post('/questions', upload.single('image'), (req, res) => {
 
   // Retrieve form data
-  const { select_subject, option1, option2, option3, option4, correctOption } = req.body;
-  const imagePath = req.file.path; // Path of the uploaded image file
+  const { select_subject, option1, option2, option3, option4, ans } = req.body;
+  console.log(req.file);
   const errors = validationResult(req);
 
   // Save the question data to MongoDB
   const que = new question({
     select_subject: req.body.select_subject,
-    image: imagePath,
+    image: req.file.filename,
     option1,
     option2,
     option3,
     option4,
-    correctOption
+    ans
   });
 
   if (!errors.isEmpty()) {
@@ -680,7 +672,7 @@ app.post('/questions', upload.single('image'), (req, res) => {
       return next(err);
     }
     // Successful - redirect to the question list.
-    res.render('uploadmcqimage.hbs');
+    res.redirect('/imageques');
   });
 });
 

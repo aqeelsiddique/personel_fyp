@@ -1,12 +1,12 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import { ClipLoader } from 'react-spinners';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import SelectQuiz from '../sub.png';
-import Timer from './Timer';
-import './index.css';
-import { setCurrentTeam, setTeamScore } from '../redux/features/Team';
+import React from "react";
+import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import SelectQuiz from "../sub.png";
+import Timer from "./Timer";
+import "./index.css";
+import { setCurrentTeam, setTeamScore } from "../redux/features/Team";
 
 const Quiz = (props) => {
   const navigate = useNavigate();
@@ -22,10 +22,10 @@ const Quiz = (props) => {
     return (
       <div
         style={{
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <ClipLoader size="30" />
@@ -36,10 +36,10 @@ const Quiz = (props) => {
     return (
       <div
         style={{
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         No Questions Found
@@ -53,10 +53,10 @@ const Quiz = (props) => {
   const handleRound = () => {
     // Now move to next Team for current Round, but first we will make sure round is also completed
     if (currentTeam + 1 === totalTeams) {
-      navigate('/result', { state: { roundCompleted: true } });
+      navigate("/result", { state: { roundCompleted: true } });
     } else {
       dispatch(setCurrentTeam(currentTeam + 1));
-      navigate('/subject');
+      navigate("/subject");
     }
   };
 
@@ -65,7 +65,7 @@ const Quiz = (props) => {
       selectedOption.trim().toLowerCase() ===
       currentQuestion.ans.trim().toLowerCase()
     ) {
-      toast.success('Correct !');
+      toast.success("Correct !");
       dispatch(
         setTeamScore({
           name: teams[currentTeam]?.teamname,
@@ -73,7 +73,7 @@ const Quiz = (props) => {
         })
       );
     } else {
-      toast.error('Wrong !');
+      toast.error("Wrong !");
     }
     handleRound();
   };
@@ -84,11 +84,11 @@ const Quiz = (props) => {
         className="quiz"
         style={{
           backgroundImage: `url(${SelectQuiz})`,
-          backgroundPosition: 'center center',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          width: '100%',
-          height: '100vh',
+          backgroundPosition: "center center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          width: "100%",
+          height: "100vh",
         }}
       >
         <div className="container">
@@ -109,7 +109,21 @@ const Quiz = (props) => {
           </div>
           <div className="quiz-content">
             <div className="question" key={currentQuestion._id}>
-              {currentQuestion.ques}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "500px",
+                  height: "200px",
+                }}
+              >
+                <img
+                  src={"/images/" + currentQuestion.image}
+                  alt="Question Image"
+                  style={{ maxWidth: "100%", maxHeight: "100%" }}
+                />
+              </div>
             </div>
             <div className="options" key={currentQuestion._id}>
               <p onClick={() => handleOptionSelect(currentQuestion.option1)}>
@@ -126,12 +140,14 @@ const Quiz = (props) => {
               </p>
             </div>
           </div>
+
           {/* <button
             disabled={currentQuestionIndex === questions.length - 1}
             onClick={handleNextQuestion}
           >
             Next Question
           </button> */}
+
           <div>Current Score: {teams[currentTeam]?.score || 0}</div>
         </div>
       </div>
