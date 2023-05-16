@@ -109,21 +109,25 @@ const Quiz = (props) => {
           </div>
           <div className="quiz-content">
             <div className="question" key={currentQuestion._id}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "500px",
-                  height: "200px",
-                }}
-              >
-                <img
-                  src={"/images/" + currentQuestion.image}
-                  alt="Question Image"
-                  style={{ maxWidth: "100%", maxHeight: "100%" }}
-                />
-              </div>
+              {currentQuestion.image ? (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "400px",
+                    height: "400px",
+                  }}
+                >
+                  <img
+                    src={"/images/" + currentQuestion.image}
+                    alt="Question Image"
+                    style={{ maxWidth: "100%", maxHeight: "100%" }}
+                  />
+                </div>
+              ) : (
+                currentQuestion.ques
+              )}
             </div>
             <div className="options" key={currentQuestion._id}>
               <p onClick={() => handleOptionSelect(currentQuestion.option1)}>
