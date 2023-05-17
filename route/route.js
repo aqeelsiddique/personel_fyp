@@ -87,6 +87,7 @@ const session = require('express-session');
 
   
   ///////////test image code
+  
   app.get('/test1', function (req, res) {
     res.render('dashboard.hbs', {
       title: 'hello',
