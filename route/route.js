@@ -56,6 +56,7 @@ const round = require('../model/round');
 
 const team = require('../model/team');
 const question = require('../model/question');
+const Result = require('../model/resultmodel');
 module.exports = function (app) {
 const session = require('express-session');
 
@@ -193,6 +194,8 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
     res.render('teamlist.hbs');
     // res.status(200).json({ myData });
   });
+
+
   app.get('/filterteams', async (req, res) => {
     const rounds = await team.distinct('select_round').sort();
     const teamsByRound = [];
@@ -205,6 +208,11 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
     res.render('schedulewiseteams.hbs', { teamsByRound });
     console.log(teamsByRound);
   });
+
+
+
+
+
   app.get('/filterteams/:id', async (req, res) => {
     const roundId = req.params.id;
     const queryObject = { select_round: roundId };
@@ -226,6 +234,8 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
     res.render('subjectwiseque.hbs', { subjectwise });
     console.log(subjectwise);
   });
+
+  
   // route handler for /filterquestion/:id
   app.get('/filterquestion/:id', async (req, res) => {
     const subjectId = req.params.id;
@@ -676,6 +686,39 @@ app.post('/questions', upload.single('image'), (req, res) => {
     res.redirect('/imageques');
   });
 });
+
+///////////////////////////////////Stored a Results////////////////
+
+app.post('/results', async (req, res) => {
+  try {
+    const { round, teams } = req.body;
+    // Create a new result object
+    const result = new Result({
+      round,
+      teams
+    });
+    // Save the result to the database
+    await result.save();
+
+    res.status(201).json({ message: 'Result saved successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error saving result', error });
+  }
+});
+
+app.get('/filterresults', async (req, res) => {
+  try {
+    // Retrieve the results from the database
+    const results = await Result.find();
+
+    // Render the Handlebars template and pass the results data
+    res.render('results.hbs', { results });
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving results', error });
+  }
+});
+
+//////////////////////////////////End OF Result Code////////////////////
 
 
 

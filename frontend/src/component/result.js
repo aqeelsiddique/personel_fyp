@@ -3,6 +3,8 @@ import './index.css';
 import SelectQuiz from '../sub.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 import {
   setCurrentRound,
   setCurrentTeam,
@@ -20,7 +22,22 @@ const Result = () => {
   let sortedTeams = [...teams];
   sortedTeams.sort((a, b) => b.score - a.score);
 
-  const handleClick = () => {
+  const handleClick = async  () => {
+    try {
+      const response = await axios.post('/results', {
+        round: currentRound + 1,
+        teams: sortedTeams,
+      });
+
+      if (response.status === 201) {
+        console.log('Result saved successfully');
+      } else {
+        console.log('Error saving result');
+      }
+    } catch (error) {
+      console.log('Error:', error.message);
+    }
+
     if (currentRound + 1 >= totalRounds) {
       toast.info('Thanks for participating');
       dispatch(setCurrentRound(0));
@@ -56,48 +73,6 @@ const Result = () => {
         </div>
         <div className="container">
           <div className="flex-content">
-            {/* {sortedTeams?.length === 3 && (
-              <>
-                <div className="second">
-                  <h1>Second Position</h1>
-                  <h2>{sortedTeams[1].teamname} University</h2>
-                  <h2>Score : {sortedTeams[1].score}</h2>
-                </div>
-                <div className="winner">
-                  <h1>Winner</h1>
-                  <h2>{sortedTeams[0].teamname} University</h2>
-                  <h2>Score : {sortedTeams[0].score}</h2>
-                </div>
-                <div className="third">
-                  <h1>Third Position</h1>
-                  <h2>{sortedTeams[2].teamname} University</h2>
-                  <h2>Score : {sortedTeams[2].score}</h2>
-                </div>
-              </>
-            )}
-            {sortedTeams?.length === 2 && (
-              <>
-                <div className="second">
-                  <h1>Second Position</h1>
-                  <h2>{sortedTeams[1].teamname} University</h2>
-                  <h2>Score : {sortedTeams[1].score}</h2>
-                </div>
-                <div className="winner">
-                  <h1>Winner</h1>
-                  <h2>{sortedTeams[0].teamname} University</h2>
-                  <h2>Score : {sortedTeams[0].score}</h2>
-                </div>
-              </>
-            )}
-            {sortedTeams?.length === 1 && (
-              <>
-                <div className="winner">
-                  <h1>Winner</h1>
-                  <h2>{sortedTeams[0].teamname} University</h2>
-                  <h2>Score : {sortedTeams[0].score}</h2>
-                </div>
-              </>
-            )} */}
             <ol>
               {sortedTeams?.map((team, index) => {
                 return (
