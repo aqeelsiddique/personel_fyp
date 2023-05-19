@@ -147,18 +147,15 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
   });
   app.post('/Addround', round_create_post);
   app.get('/list_rounds', round_list);
-
   app.post('/delround/:id', delround);
   app.put('/editround/:id', roundupdate);
   app.get('/editround/:id', (req, res) => {
     let readquery = req.params.id;
-
     round.findOne({ roundname: readquery }).then((x) => {
       res.render('roundupdate.hbs', { x });
     });
   });
-  /////////////////for react js
-
+  /////////////////for react js///////////////////////////////////
   app.get('/rounds', async (req, res) => {
     try {
       const rounds = await round.find().lean().exec();
@@ -179,20 +176,17 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
     }
   });
 
+
+
   app.get('/selecttecams', async (req, res) => {
     const { select_round } = req.query;
     const queryObject = {};
     if (select_round) {
       queryObject.select_round = select_round;
     }
-    // if (name) {
-    // queryObject.name = name;
-    // }
-
     console.log(queryObject);
     const myData = await team.find(queryObject);
     res.render('teamlist.hbs');
-    // res.status(200).json({ myData });
   });
 
 
@@ -261,27 +255,6 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
       res.status(500).send(error);
     }
   });
-  // app.get('/filterquestion/:subject', async (req, res) => {
-  //   const selectedSubject = req.params.subject;
-  //   const subjects = await question.distinct('select_subject').sort();
-  //   const subjectwise = [];
-
-  //   for (const subject of subjects) {
-  //     const queryObject = { select_subject: subject };
-  //     const ques = await question.find(queryObject);
-
-  //     if (selectedSubject && subject === selectedSubject) {
-  //       subjectwise.push({ subject, ques, selected: true });
-  //     } else {
-  //       subjectwise.push({ subject, ques, selected: false });
-  //     }
-
-  //   }
-
-  //   // res.render('subjectwiseque.hbs', { subjectwise });
-  //   console.log("jj", subjectwise)
-  // });
-
   /////////////////////end round wise code /////////////
   /////////////final done of of Subject Rout
   app.get('/AddSub', (req, res) => {
@@ -302,6 +275,9 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
   });
   app.post('/deltedata/:id', subject.delete);
   app.get('/list_subjects', subject.subject_list);
+
+
+
   app.get('/subjects', async (req, res) => {
     try {
       const subjects = await subjectmodel.find().lean().exec();
@@ -310,18 +286,10 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
       res.status(500).json({ message: err.message });
     }
   });
-  //////////////////////////final Question route portion start//////////////
-  // app.get("/add_Question", (req, res) => {
-  //   res.render("question");
-  // });]
   app.get('/add_Question', controller.process_create_get1);
   app.post('/add_Question', Controller.process_create_post1);
   app.get('/questionlists', controller.question_list);
-  // app.get('/quiz/:subject', async (req, res) => {
-  //   const subject = req.params.subject;
-  //   const quizzes = await question.find({ subject: subject });
-  //   res.send(quizzes);
-  // });
+
   app.get('/questions', async (req, res) => {
     const questions = await question.find();
     res.json(questions);

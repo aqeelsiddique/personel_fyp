@@ -23,8 +23,7 @@ exports.round_create_post = [
         errors: errors.array(),
       });
       return;
-    } 
-    else {
+    } else {
       // Data from form is valid.
       // Check if Category with same name already exists.
       round.findOne({ roundname: req.body.roundname }).exec(function (err) {
@@ -48,62 +47,56 @@ exports.round_create_post = [
   },
 ];
 
-
 // Display list of all Rouns.
 exports.round_list = function (req, res, next) {
-  Promise.all([
-    round.find().lean().exec()
-  ]).then(([list_round]) => {
+  Promise.all([round.find().lean().exec()]).then(([list_round]) => {
     res.render("roundlists", {
-      title: 'round List',
-        list_round: list_round
-
-    })
-  })
-    // round.find().lean()
-    //   .exec(function (err, list_round) {
-    //     if (err) {
-    //       return next(err);
-    //     }      
-    //     // Successful, so render.
-    //     res.render('roundlists', {
-    //       title: 'round List',
-    //       list_round: list_round,        
-    //     });
-    //     // console.log(list_subject)
-    //   });
-  };
-
-
+      title: "round List",
+      list_round: list_round,
+    });
+  });
+  // round.find().lean()
+  //   .exec(function (err, list_round) {
+  //     if (err) {
+  //       return next(err);
+  //     }
+  //     // Successful, so render.
+  //     res.render('roundlists', {
+  //       title: 'round List',
+  //       list_round: list_round,
+  //     });
+  //     // console.log(list_subject)
+  //   });
+};
 
 // Delete a user with specified user id in the request
-exports.delround = (req, res)=>{
-
-    round.findByIdAndDelete(req.params.id, (err, doc)=>{
-      if(!err){
-          res.redirect('/list_rounds');
-          console.log("success",doc)            
-      } else {
-          console.log('Error while deleting', err)
-
-          
-      }
+exports.delround = (req, res) => {
+  round.findByIdAndDelete(req.params.id, (err, doc) => {
+    if (!err) {
+      res.redirect("/list_rounds");
+      console.log("success", doc);
+    } else {
+      console.log("Error while deleting", err);
+    }
   });
-  }
+};
 
-  exports.roundupdate = function(req, res) {
-    let readquery = req.params.id;
-      round.updateOne({roundname:readquery}, {
-          $set:{
-            roundname: req.body.roundname,
-          }
-      })
-      .then((x)=>{
-          // req.flash('sucess', 'Your Data has update')
-          res.redirect('/Addround')
-      })
-      .catch((y)=>{
-          console.log(y)
-      })
-    
-  }
+exports.roundupdate = function (req, res) {
+  let readquery = req.params.id;
+  round
+    .updateOne(
+      { roundname: readquery },
+      {
+        $set: {
+          roundname: req.body.roundname,
+        },
+      }
+    )
+    .then((x) => {
+      // req.flash('sucess', 'Your Data has update')
+      res.redirect("/Addround");
+    })
+    .catch((y) => {
+      console.log(y);
+    });
+};
