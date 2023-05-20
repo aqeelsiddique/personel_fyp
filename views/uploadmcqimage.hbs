@@ -7,7 +7,7 @@
   }
 
   .table-wrapper {
-    margin-top: 100px;
+    margin-top: 50px;
     margin-left: 5%;
     margin-right: 5%;
     border-radius: 3px 3px 0 0;
@@ -16,6 +16,7 @@
   h1 {
     background: #7522E6;
     color: #fff;
+    font-size: x-large;
     padding: 16px 30px;
     min-width: 100%;
     margin: -20px -25px 10px;
@@ -35,7 +36,7 @@
 {{/if}}
 
 <form action="/questions" method="post" class="table-wrapper" enctype="multipart/form-data">
-<h1>Add a Questions</h1>
+<h1>Create a Questions</h1>
     <select class="form-control" id="machine" name="select_subject" placeholder="Select subject" required="true">
       {{#if select_subject}}
       {{#each select_subject }}

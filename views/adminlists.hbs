@@ -1,9 +1,9 @@
 <body>
-      {{> sidebars}}
+    {{> sidebars}}
 
-       {{> navbar}}
+    {{> navbar}}
 
-    
+
 </body>
 <div class="container-xl">
     <div class="table-responsive">
@@ -14,7 +14,7 @@
                         <h2>Manage <b>Admin</b></h2>
                     </div>
                     <div class="col-sm-6">
-                        <form method="" action="/evenhead">
+                        <form method="" action="/admin">
                             <button class="btn btn-success" data-toggle="modal">
                                 Add New Admin-Name
                                 <i class="material-icons">&#xE147;</i>
@@ -65,19 +65,21 @@
 
 
 
-                        <td> </td>
                         <td>
                             <div class="icons">
-                                <a href="/edit/{{this.name}}" class="fa fa-edit" style="font-size:25px;color:rgb(80, 85, 87);"
-                                onclick="return confirm('Are you sure to update this record ?');"></a>
+                                <a href="/edit/{{this.name}}" class="fa fa-edit"
+                                    style="font-size:25px;color:rgb(80, 85, 87);"
+                                    onclick="return confirm('Are you sure to update this record ?');"></a>
+                        </td>
+                        <td>
+
 
                             {{!-- <form method="" action="/evenheadup/{{this.name}}">
                                 <button class="btn" onclick="return confirm('Are you sure to update this record ?');"><i
                                         class="fa fa-edit"></i></button>
 
                             </form> --}}
-                            <a href="/admindel/{{_id}}" class="fa fa-trash" 
-                            style="font-size:25px;color:red";
+                            <a href="/admindel/{{_id}}" class="fa fa-trash" style="font-size:25px;color:red" ;
                                 onclick="return confirm('Are you sure to update this record ?');"> </a>
 
                             {{!-- <form method="POST" action="/eventhead_team/{{_id}}">
@@ -87,21 +89,19 @@
                             </form> --}}
                         </td>
 
-                            </div>
-                            
-                        {{!-- <td>
-                            <a href="/update_Question/{{this._id}}" class="edit" data-toggle="modal"><i
-                                    class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="/delete_Question/{{this._id}}" class="delete" data-toggle="modal"><i
-                                    class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                        </td>
-                    </tr> --}}
-
-                    {{/each}}
-                </tbody>
-            </table>
         </div>
+
+        {{!-- <td>
+            <a href="/update_Question/{{this._id}}" class="edit" data-toggle="modal"><i class="material-icons"
+                    data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+            <a href="/delete_Question/{{this._id}}" class="delete" data-toggle="modal"><i class="material-icons"
+                    data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+        </td>
+        </tr> --}}
+
+        {{/each}}
+        </tbody>
+        </table>
     </div>
 </div>
-
-
+</div>
