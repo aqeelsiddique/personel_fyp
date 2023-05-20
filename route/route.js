@@ -147,7 +147,7 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
   });
   app.post('/Addround', round_create_post);
   app.get('/list_rounds', round_list);
-  app.post('/delround/:id', delround);
+  app.get('/delround/:id', delround);
   app.put('/editround/:id', roundupdate);
   app.get('/editround/:id', (req, res) => {
     let readquery = req.params.id;
@@ -273,7 +273,7 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
       res.render('updatesubject.hbs', { x });
     });
   });
-  app.post('/deltedata/:id', subject.delete);
+  app.get('/deltedata/:id', subject.delete);
   app.get('/list_subjects', subject.subject_list);
 
 

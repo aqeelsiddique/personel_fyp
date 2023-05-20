@@ -1,24 +1,23 @@
-
 <style>
 	table.table td a {
 		font-weight: 400 !important;
-    /* font-weight: bold; */
-    color: #ffffff;
-    display: inline-block;
-    text-decoration: none;
-    outline: none !important;
-}
+		/* font-weight: bold; */
+		color: #ffffff;
+		display: inline-block;
+		text-decoration: none;
+		outline: none !important;
+	}
 </style>
 
 
 
 
 <body>
-      {{> sidebars}}
+	{{> sidebars}}
 
-       {{> navbar}}
+	{{> navbar}}
 
-    
+
 </body>
 
 <div class="container-xl">
@@ -35,10 +34,10 @@
 								Add New Subject
 								<i class="material-icons">&#xE147;</i>
 							</button>
-						{{!-- <a href="/AddSub" class="btn btn-success" data-toggle="modal"><i
-								class="material-icons">&#xE147;</i> <span>Add New Subject-Name</span></a> --}}
-						<a href="/deltedata/{{this._id}}" class="btn btn-danger" data-toggle="modal"><i
-								class="material-icons">&#xE15C;</i> <span>Delete</span></a>
+							{{!-- <a href="/AddSub" class="btn btn-success" data-toggle="modal"><i
+									class="material-icons">&#xE147;</i> <span>Add New Subject-Name</span></a> --}}
+							<a href="/deltedata/{{this._id}}" class="btn btn-danger" data-toggle="modal"><i
+									class="material-icons">&#xE15C;</i> <span>Delete</span></a>
 					</div>
 				</div>
 			</div>
@@ -51,13 +50,13 @@
 								<label for="selectAll"></label>
 							</span>
 						</th>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
 						<th>Subject-Name</th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -74,28 +73,25 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td></td>
-						<td></td>
-						<td class="liststyle">
-		
-		
-							
-							{{!-- <a href="/update/{{this._id}}" class="edit" data-toggle="modal"><i
-									class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> --}}
-								<a href="/editsubject/{{this.name}}" class="fa fa-edit"
-								style="font-size:25px;    font-weight: 500;color:rgb(255, 255, 255);"
-								onclick="return confirm('Are you sure to update this record ?');"></a>
-							<form method="POST" action="/deltedata/{{_id}}">
-								<button class="btn" onclick="return confirm('Are you sure to delete this record ?');"><i
-										class="fa fa-trash"></i></button>
-							</form>
-
-
-							<a href="/filterquestion/{{this.name}}" class="btn btn-primary"
-								style="font-size:15px;"
-								onclick="return confirm('Are you sure to Views this record ?');">View Records</a>
-							{{!-- <a href="/deltedata/{{_id}}" class="delete" data-toggle="modal"><i									class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> --}}
+						<td>
+							<a href="/editsubject/{{this.name}}" class="fa fa-edit"
+								style="font-size: 25px; color: rgb(80, 85, 87); margin-right: 5px;"
+								onclick="return confirm('Are you sure to update this record?');"></a>
 						</td>
+						<td>
+							<a href="/deltedata/{{_id}}" class="fa fa-trash"
+								style="font-size: 25px; color: red; margin-right: 5px;"
+					     		onclick="return confirm('Are you sure to update this record?');"></a>
+						</td>
+						
+						<td class="liststyle">
+							<a href="/filterquestion/{{this.name}}"
+								onclick="return confirm('Are you sure to view this record?');">
+								<img src="\images\view (2).png" alt="View Records"
+									style="font-size: 15px; margin-right: 5px;">
+							</a>
+						</td>
+
 					</tr>
 					{{/each}}
 				</tbody>

@@ -1,3 +1,6 @@
+
+
+
 <body>
     {{> sidebars}}
 
@@ -39,9 +42,9 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th></th>
-                        <th></th>
                         <th>Subject-Name</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,19 +60,22 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td></td>
                         <td>{{this.roundname}}</td>
-                        <td class="liststyle">
+                        <td></td>
+                        <td>   <a href="/editround/{{this.roundname}}" class="fa fa-edit"
+                                style="font-size:25px;color:rgb(80, 85, 87);"
+                                onclick="return confirm('Are you sure to update this record ?');"></a></td>
+                        <td>
                             {{!-- <a href="/update/{{this._id}}" class="edit" data-toggle="modal"><i
                                     class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> --}}
-                            <a href="/editround/{{this.roundname}}" class="fa fa-edit"
-                                style="font-size:25px;color:rgb(80, 85, 87);"
-                                onclick="return confirm('Are you sure to update this record ?');"></a>
-                            <form method="POST" action="/delround/{{_id}}">
-                                <button class="btn" onclick="return confirm('Are you sure to delete this record ?');"><i
-                                        class="fa fa-trash"></i></button>
-                            </form>
+                         
+
+                            {{!-- <form method="POST" action="/delround/{{_id}}">
+                                <button  class="fa fa-trash" style="font-size:25px;color:red" ;
+								onclick="return confirm('Are you sure to update this record ?');"></i></button>
+                            </form> --}}
+                            	<a href="/delround/{{_id}}" class="fa fa-trash" style="font-size:25px;color:red" ;
+								onclick="return confirm('Are you sure to update this record ?');"> </a>
                             {{!-- <a href="/deltedata/{{_id}}" class="delete" data-toggle="modal"><i
                                     class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a> --}}
                         </td>

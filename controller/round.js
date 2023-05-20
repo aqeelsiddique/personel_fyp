@@ -74,7 +74,7 @@ exports.delround = (req, res) => {
   round.findByIdAndDelete(req.params.id, (err, doc) => {
     if (!err) {
       res.redirect("/list_rounds");
-      console.log("success", doc);
+
     } else {
       console.log("Error while deleting", err);
     }
