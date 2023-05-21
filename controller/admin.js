@@ -179,6 +179,27 @@ const forgetPassword = catchayncerror(async (req, res, next) => {
 
   // rest of the function code ...
 });
+const updateadmin = (req, res)=> {
+  let readquery = req.params.id;
+    admin.updateOne({name:readquery}, {
+        $set:{
+          name: req.body.name,
+          email: req.body.email,
+          password: req.body.password,
+          cpassword: req.body.cpassword,
+          image: req.file.filename,
+
+        }
+    })
+    .then((x)=>{
+        // req.flash('sucess', 'Your Data has update')
+        res.redirect('/adminlists')
+    })
+    .catch((y)=>{
+        console.log(y)
+    })
+  
+}
 
 
 
@@ -193,5 +214,6 @@ module.exports = {
   adminlogin,
   adminlogout,
   forgetPassword,
-  logout
+  logout,
+  updateadmin
 };

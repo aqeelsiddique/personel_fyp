@@ -44,6 +44,7 @@ const {
   adminlogout,
   forgetPassword,
   logout,
+  updateadmin
 } = require('../controller/admin');
 const {
   round_create_post,
@@ -455,6 +456,9 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
   })
   // app.post('/forgot', forgetPassword);
   //////////////Admin code section/////////////
+
+
+
   app.get('/admin', (req, res) => {
     res.render('adminprofile.hbs');
   });
@@ -467,127 +471,21 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
   app.post('/adminreg', upload.single('profile'), adminreg);
   app.get('/admininfo', admininfo);
   app.get('/adminlists', admin_lists);
+  app.get('/adminedit/:id', (req, res) => {
+    let readquery = req.params.id;
+
+    admin.findOne({ name: readquery }).then((x) => {
+      res.render('updateadmin.hbs', { x });
+    });
+  });
+  app.put('/adminedit/:id', upload.single('profile'), updateadmin);
+
   app.get('/admindel/:id', admindelete);
 
 
 
 
 ////////////////////////////////forgot testing code 
-
-// // Nodemailer setup
-// const transporter = nodemailer.createTransport({
-//   service: 'Gmail',
-//   auth: {
-//     user: 'your_email@gmail.com',
-//     pass: 'your_password'
-//   }
-// });
-
-// // Routes
-// // app.get('/', (req, res) => {
-// //   res.render('index');
-// // });
-
-// app.post('/forgot', (req, res, next) => {
-//   async.waterfall([
-//     function(done) {
-//       crypto.randomBytes(20, (err, buf) => {
-//         const token = buf.toString('hex');
-//         done(err, token);
-//       });
-//     },
-//     function(token, done) {
-//       admin.findOne({ email: req.body.email }, (err, user) => {
-//         if (!user) {
-//           req.flash('error', 'No account with that email address exists.');
-//           return res.redirect('/forgot');
-//         }
-
-//         user.resetPasswordToken = token;
-//         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-
-//         user.save(err => {
-//           done(err, token, user);
-//         });
-//       });
-//     },
-//     function(token, user, done) {
-//       const mailOptions = {
-//         to: user.email,
-
-//         from: 'your_email@gmail.com',
-
-//         subject: 'Reset Password',
-
-//         text: `You are receiving this email because you (or someone else) has requested to reset the password for your account.\n\n` +
-//           `Please click on the following link, or paste it into your browser to complete the process:\n\n` +
-//           `http://${req.headers.host}/reset/${token}\n\n` +
-//           `If you did not request this, please ignore this email and your password will remain unchanged.\n`
-//       };
-
-//       transporter.sendMail(mailOptions, err => {
-//         // req.flash('info', `An email has been sent to ${user.email} with further instructions.`);
-//         done(err, 'done');
-//       });
-//     }
-//   ], err => {
-//     if (err) return next(err);
-//     res.redirect('/forgot');
-//   });
-// });
-// app.get('/reset/:token', (req, res) => {
-//   admin.findOne({
-//     resetPasswordToken: req.params.token,
-//     resetPasswordExpires: { $gt: Date.now() }
-//   }, (err, user) => {
-//     if (!user) {
-//       req.flash('error', 'Password reset token is invalid or has expired.');
-//       return res.redirect('/forgot');
-//     }
-//     res.render('reset', { token: req.params.token });
-//   });
-// });
-// app.post('/reset/:token', (req, res) => {
-//   async.waterfall([
-//     function(done) {
-//       User.findOne({
-//         resetPasswordToken: req.params.token,
-//         resetPasswordExpires: { $gt: Date.now() }
-//       }, (err, user) => {
-//         if (!user) {
-//           req.flash('error', 'Password reset token is invalid or has expired.');
-//           return res.redirect('back');
-//         }
-
-//         user.password =  req.body.password;
-//         user.resetPasswordToken = undefined;
-//         user.resetPasswordExpires = undefined;
-
-//         user.save(err => {
-//           req.logIn(user, err => {
-//             done(err, user);
-//           });
-//         });
-//       });
-//     },
-//     function(user, done) {
-//       const mailOptions = {
-//         to: user.email,
-//         from: 'your_email@gmail.com',
-//         subject: 'Your password has been changed',
-//         text: `Hello,\n\n` +
-//           `This is a confirmation that the password for your account ${user.email} has been changed.\n`
-//       };
-
-//       transporter.sendMail(mailOptions, err => {
-//         req.flash('success', 'Success! Your password has been changed.');
-//         done(err);
-//       });
-//     }
-//   ], err => {
-//     res.redirect('/');
-//   });
-// });
 
 app.get("/forgot", (req, res) => {
   res.render("forgot")
