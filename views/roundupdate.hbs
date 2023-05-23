@@ -34,7 +34,7 @@
         <input type="text" class="form-control" name="roundname" placeholder="Enter Round Name" required>
         {{!-- <input type="text" class="form-control" name="fullSubjectName" placeholder="Subject Name"> --}}
     </div>   
-    <button type="submit" class="btn btn-info" onclick="return confirm('Are you sure to update this record ?');">
+    <button type="submit" class="btn btn-info" onclick="showConfirmation(event)">
         <i class="fa fa-database"></i>
         Submit
     </button>

@@ -20,7 +20,8 @@ const userShema = new mongoose.Schema({
         type: String,
         require: true
     },
-    
+    label: String,
+    value: Number,
     image: {
         type: String,
         // require: true
