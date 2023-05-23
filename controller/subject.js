@@ -91,6 +91,8 @@ exports.subjectupdate = function(req, res) {
     })
   
 }
+
+
 // exports.update =  (req, res) => {
 //   Subject.updateOne({ _id: req.body._id }, req.body, { new: true }, (err, doc) => {
 //     if (!err) { res.redirect('/add_Subject'); }

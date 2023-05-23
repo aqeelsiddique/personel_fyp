@@ -43,7 +43,7 @@
   <!-- /#wrapper -->
   {{!--
   <script src="index.js"></script> --}}
-  
+
 
 </body>
 
@@ -66,19 +66,23 @@
     event.preventDefault();
 
     Swal.fire({
-      title: "Good job!",
-  text: "You clicked the button!",
-  icon: "success",
-  button: "Aww yiss!",
+      title: "Successful!",
+      text: "You clicked the button!",
+      icon: "success",
+      showCancelButton: true,
+      confirmButtonText: "ok!",
     }).then((result) => {
       if (result.isConfirmed) {
-        document.getElementById("round").submit();
+        // Perform the desired action upon confirmation
+        // For example, submit a form
+        document.getElementById("add_user").submit();
       }
     });
   }
 </script>
 
-  
+
+
 <script>
   let popup = document.getElementById("popup");
   function openpopup() {

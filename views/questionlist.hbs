@@ -67,7 +67,8 @@
 						</td>
 						<td>
 							{{#if this.image}}
-							<img src="/images/{{this.image}}" alt="Question Image" style="max-width: 50px; max-height: 50px;">
+							<img src="/images/{{this.image}}" alt="Question Image"
+								style="max-width: 50px; max-height: 50px;">
 							{{else}}
 							{{this.ques}}
 							{{/if}}
@@ -77,16 +78,21 @@
 						<td>{{this.option3}}</td>
 						<td>{{this.option4}}</td>
 						<td>{{this.ans}}</td>
-						<td></td>
-						<td class="liststyle">
-							<a href="/update_Question/{{this.ques}}" class="fa fa-edit"
-								style="font-size:25px;color:rgb(80, 85, 87);"
-								onclick="return confirm('Are you sure to update this record ?');"></a>
 
-							<form method="POST" action="/delete_Question/{{_id}}">
-								<button class="btn" onclick="return confirm('Are you sure to delete this record ?');"><i
-										class="fa fa-trash"></i></button>
-							</form>
+
+
+
+						<td> <a href="/update_Question/{{this.ques}}" class="fa fa-edit"
+								style="font-size:25px;color:rgb(80, 85, 87);"
+								onclick="return confirm('Are you sure to update this record ?');"></a></td>
+						<td>
+
+
+
+							<a href="/delete_Question/{{_id}}" class="fa fa-trash" style="font-size:25px;color:red" ;
+								onclick="return confirm('Are you sure to update this record ?');"> </a>
+
+
 						</td>
 					</tr>
 					{{/each}}

@@ -140,6 +140,8 @@ const question_list = function (req, res, next) {
       console.log(list_question);
     });
 };
+
+
 ///////////////Update A data
 const updatequestion = (req, res) => {
   let readquery = req.params.id;
@@ -166,6 +168,7 @@ const updatequestion = (req, res) => {
       console.log(y);
     });
 };
+
 // Delete a user with specified user id in the request
 const deletequestion = (req, res) => {
   Question.findByIdAndDelete(req.params.id, (err, doc) => {

@@ -40,7 +40,7 @@
     <select class="form-control" id="machine" name="select_subject" placeholder="Select machine" required="true">
        {{#if select_subject}}
       {{#each select_subject }}
-                  <option type="text" value="" disabled selected hidden>Select a Subject</option>
+                  <option type="text" value=""  disabled selected hidden >Select a Subject</option>
 
       <option value={{this.name}} {{isSelected this._id ../question.select_subject.name}}>{{this.name}}</option>
       {{/each}}

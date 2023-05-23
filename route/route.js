@@ -98,34 +98,6 @@ const session = require('express-session');
 
   
 // Handle form submission
-app.post('/upload-mcq', upload.single('image'), (req, res) => {
-  // Retrieve form data
-  const { question, option1, option2, option3, option4 } = req.body;
-  const imagePath = req.file.path; // Path of the uploaded image
- 
-  // Create an MCQ instance with the form data and image path
-  const mcq = new question({
-    question,
-    options: [
-      { text: option1, image: imagePath },
-      { text: option2, image: imagePath },
-      { text: option3, image: imagePath },
-      { text: option4, image: imagePath },
-    ],
-  });
-
-  // Save the MCQ to the database
-  mcq.save((err) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Error occurred while saving the MCQ.');
-    } else {
-      res.status(200).send('MCQ saved successfully.');
-    }
-  });
-});
-
-
   //////////////////////end test code////////
 
   // Retrieve all documents in the 'images' collection
@@ -305,7 +277,7 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
             // Render the view with the data
             res.render('questionupdate.hbs', {
               x,
-              title: 'Add Team',
+              title: 'Add Question',
               data: {
                 select_subject,
               },
@@ -332,6 +304,8 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
   app.get('/teamlist', Team.Team_list);
   app.get('/delete_team/:id', Team.teamdelete);
   // app.post("/updateteam/:id", Team.update);
+  app.put('/editteam/:id', Team.teamupdate);
+
   app.get('/editteam/:id', (req, res, next) => {
     let readquery = req.params.id;
     team
@@ -359,7 +333,6 @@ app.post('/upload-mcq', upload.single('image'), (req, res) => {
         return next(err);
       });
   });
-  app.put('/editteam/:id', Team.teamupdate);
 
   ///////////////////////////////////Team Section End//////////////////////////////////
   //////////////////EventHead Section////////////////////

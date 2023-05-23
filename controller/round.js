@@ -83,8 +83,7 @@ exports.delround = (req, res) => {
 
 exports.roundupdate = function (req, res) {
   let readquery = req.params.id;
-  round
-    .updateOne(
+  round.updateOne(
       { roundname: readquery },
       {
         $set: {
