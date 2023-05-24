@@ -1,17 +1,17 @@
-import React from 'react';
-import './index.css';
-import SelectQuiz from '../sub.png';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React from "react";
+import "./index.css";
+import SelectQuiz from "../sub.png";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import {
   setCurrentRound,
   setCurrentTeam,
   setTotalRounds,
-} from '../redux/features/Team';
-import { toast } from 'react-toastify';
-import { setTime } from '../redux/features/Timer';
+} from "../redux/features/Team";
+import { toast } from "react-toastify";
+import { setTime } from "../redux/features/Timer";
 const Result = () => {
   const currentRound = useSelector((state) => state.teams.currentRound);
   const totalRounds = useSelector((state) => state.teams.totalRounds);
@@ -22,33 +22,33 @@ const Result = () => {
   let sortedTeams = [...teams];
   sortedTeams.sort((a, b) => b.score - a.score);
 
-  const handleClick = async  () => {
+  const handleClick = async () => {
     try {
-      const response = await axios.post('/results', {
+      const response = await axios.post("/results", {
         round: currentRound + 1,
         teams: sortedTeams,
       });
 
       if (response.status === 201) {
-        console.log('Result saved successfully');
+        console.log("Result saved successfully");
       } else {
-        console.log('Error saving result');
+        console.log("Error saving result");
       }
     } catch (error) {
-      console.log('Error:', error.message);
+      console.log("Error:", error.message);
     }
 
     if (currentRound + 1 >= totalRounds) {
-      toast.info('Thanks for participating');
+      toast.info("Thanks for participating");
       dispatch(setCurrentRound(0));
       dispatch(setCurrentTeam(0));
       dispatch(setTotalRounds(0));
       dispatch(setTime(0));
-      navigate('/main2');
+      navigate("/main2");
     } else {
       dispatch(setCurrentRound(currentRound + 1));
       dispatch(setCurrentTeam(0));
-      navigate('/subject');
+      navigate("/subject");
     }
   };
   return (
@@ -57,11 +57,11 @@ const Result = () => {
         className="quiz"
         style={{
           backgroundImage: `url(${SelectQuiz})`,
-          backgroundPosition: 'center center',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          width: '100%',
-          height: '100vh',
+          backgroundPosition: "center center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          width: "100%",
+          height: "100vh",
         }}
       >
         <div className="round-detail">
@@ -75,6 +75,7 @@ const Result = () => {
           <div className="flex-content">
             <ol>
               {sortedTeams?.map((team, index) => {
+                
                 return (
                   <li key={`${index}_${team?.teamname}`}>
                     <p>{team.universityname} University</p>
@@ -87,8 +88,8 @@ const Result = () => {
           <div className="card-submit">
             <button className="Color-White" onClick={handleClick}>
               {currentRound + 1 >= totalRounds
-                ? 'Go to Main Screen'
-                : 'continue'}
+                ? "Go to Main Screen"
+                : "continue"}
             </button>
           </div>
         </div>
