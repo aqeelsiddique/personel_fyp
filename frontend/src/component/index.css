@@ -56,7 +56,8 @@ label {
     left: 10%;
     transform: translateY(50,-50); */
 }
-.Auth-form-content button {
+.Auth-form-content .btn {
+  color: white;
   border-radius: 25px;
   box-shadow: 1px 1px 6px 3px rgb(229, 230, 231);
   background-color: #a020f0;
@@ -142,6 +143,9 @@ label {
 }
 
 .subject .round {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: center;
   padding-top: 2rem;
 }
@@ -153,6 +157,14 @@ label {
 
 .subject .round h1 span {
   color: gold;
+}
+
+.subject .loop-count p{
+  font-size: 3rem;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  padding: 2rem 4rem;
 }
 
 /* QUiz  */
@@ -177,14 +189,15 @@ label {
   width: 100%;
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.8rem;
 }
 
-.quiz .quiz-content .options {
+/* .quiz .quiz-content .options {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(0.5fr);
   font-size: 1.4rem;
-}
+} */
+
 .quiz .quiz-team-detail .row {
   display: flex;
   flex-direction: row;
@@ -212,12 +225,16 @@ label {
   font-size: 2.6rem;
 }
 
+.quiz .quiz-content {
+  width: 75%;
+}
 .quiz .quiz-content .options p {
   padding: 0.5rem 2rem;
-  text-align: start;
-  width: 300px;
-  height: 50px;
-  margin: 1rem;
+  font-size: 1.4rem;
+  /* text-align: start; */
+  width: 100%;
+  /* height: 50px; */
+  /* margin: 1rem; */
   border: none;
   border-radius: 1.2rem;
   box-shadow: 1px 1px 6px 2px rgb(175, 168, 168);
@@ -229,26 +246,21 @@ label {
   cursor: pointer;
 }
 
-/* Teams  */
-.teams .card button {
-  text-decoration: none;
-  font-size: 1.2rem;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  color: #a020f0;
-  position: absolute;
-  top: -25px;
-  right: 5px;
-  transform: translate(0%, 0%);
+.quiz .current-score p{
+    font-size: 1.2rem;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    padding: 2rem 3rem;
 }
+
+/* Teams  */
 
 .teams {
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  /* align-items: center; */
 }
 
 .teams .team-title {
@@ -258,26 +270,29 @@ label {
   font-weight: 700;
 }
 
-.teams .team-member {
-  display: flex;
-  flex-direction: row;
-  /* margin-top: 3rem; */
-  color: rgb(75, 77, 184);
+.teams .team-title span{
+  color: rgb(194, 165, 1);
+  font-size: 2.5rem;
 }
 
-.teams .team-member .team {
-  margin: 0px auto;
+.teams .card {
+  /* border: #8204e2; */
+  width: 100%;
+  font-size: 1.2rem;
+  background-color: #a020f0;
 }
 
-.team .team-member {
-  align-items: center;
-  place-items: center;
+.teams .card .uniname{
+  background-color: #8204e2;
+  color: white;
+  padding: 1rem 0rem;
+  
 }
 
 .teams button {
   padding: 0.6rem 3rem;
   margin-top: 1.5rem;
-  /* background-color: transparent; */
+  background-color: transparent;
   color: white;
   text-decoration: none;
   background-color: #a020f0;
@@ -285,6 +300,16 @@ label {
   border-radius: 2rem;
   border: none;
 }
+
+.teams button:hover {
+  background-color: #901dd8;
+}
+
+.teams .card-submit .cancel-btn{
+  margin-right: 1rem;
+}
+
+/* Main 2 page */
 
 .main2 .main {
   box-shadow: 1px 1px 7px 5px rgb(228, 226, 226);
@@ -325,10 +350,15 @@ label {
   height: 100%;
 }
 
-.main2 .btn {
+.main2 .main-set Form.Control {
+  width: 400px;
+}
+
+.main2 .submit .btn {
   background-color: #a020f0;
   color: white;
   text-decoration: none;
+  justify-content: center;
 }
 .main2 .btn:hover {
   background-color: #851cc7;
@@ -346,7 +376,7 @@ label {
   font-weight: 600;
   color: white;
   font-size: 3rem;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .result .round-detail .round h1 span {
@@ -355,7 +385,7 @@ label {
   font-weight: 800;
 }
 
-.result .flex-content {
+/* .result .flex-content {
   display: flex;
   flex-direction: row;
   position: absolute;
@@ -369,15 +399,84 @@ label {
   color: olivedrab;
   font-weight: bold;
   text-transform: uppercase;
-}
+} */
 
-.result .flex-content .winner {
+/* .result .flex-content .winner {
   margin-top: -200px;
+} */
+
+.result .result-card{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+margin-top: 10%;
 }
 
-.flex-row {
+.result .card {
+  text-align: center;
+  /* border: #8204e2; */
+  font-size: 1.2rem;
+  width: 100%;
+  /* background-color: #a020f0; */
+}
+
+.result .quiz .card .uniname{
+  background-color: #8204e2;
+  color: white;
+  padding: 1rem 0rem;
+}
+
+.result .quiz .r-card .col-md-4{
+  width: 100%;
+}
+
+.result .card-submit {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.result .card-submit button {
+  padding: 0.6rem 3rem;
+  /* margin-top: 1.5rem; */
+  background-color: transparent;
+  color: white;
+  text-decoration: none;
+  background-color: #8204e2;
+  box-shadow: 2px 2px 7px 5px rgb(223, 219, 219);
+  border-radius: 2rem;
+  border: none;
+  cursor: pointer;
+}
+
+.result .card-submit button:hover {
+  background-color: #8018c0;
+}
+
+/* .flex-row {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+} */
+
+
+.popup-content {
+  margin: auto;
+  background: rgb(255, 255, 255);
+  width: 50%;
+  padding: 5px;
+}
+.popup-arrow {
+  color: rgb(255, 255, 255);
+}
+[role='tooltip'].popup-content {
+  width: 200px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+}
+
+.popup-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+[data-popup='tooltip'].popup-overlay {
+  background: transparent;
 }

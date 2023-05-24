@@ -3,6 +3,7 @@ import Sub from '../sub.png';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchQuestion } from '../redux/features/Question';
+import { setSubject } from '../redux/features/Team';
 import { toast } from 'react-toastify';
 import './index.css';
 
@@ -28,7 +29,10 @@ function Subject() {
   const handleSubjectClick = (id) => {
     dispatch(fetchQuestion(encodeURIComponent(id)))
       .unwrap()
-      .then(() => navigate('/Quiz'))
+      .then(() => {
+        dispatch(setSubject(id));
+        navigate('/Quiz');
+      })
       .catch((err) => toast.error(err?.message || 'Something went wrong'));
   };
   return (
@@ -45,7 +49,7 @@ function Subject() {
         }}
       >
         <div className="container">
-          <p style={{ fontSize: '24px', color: 'white' }}>{currentRound + 1}</p>
+
           <div className="round flex-row">
             <p>{teams[currentTeam].universityname || 'University Name'}</p>
             <h1>
@@ -69,6 +73,9 @@ function Subject() {
               ))}
             </div>
           </div>
+        </div>
+        <div className="loop-count">
+          <p >{currentRound + 1}</p>
         </div>
       </div>
     </>

@@ -12,6 +12,7 @@ const teamSlice = createSlice({
     totalRounds: 0,
     totalTeams: 0,
     roundSelected: '',
+    selectedSubject: '',
   },
 
   reducers: {
@@ -43,6 +44,9 @@ const teamSlice = createSlice({
     setRoundSelected: (state, action) => {
       return { ...state, roundSelected: action.payload };
     },
+    setSubject: (state, action) => {
+      return { ...state, selectedSubject: action.payload };
+    },
   },
   // adding cases for handling state life cycle of promise returned by thunk
   extraReducers: (builder) => {
@@ -71,6 +75,7 @@ export const {
   setTotalRounds,
   setTeamScore,
   setRoundSelected,
+  setSubject,
 } = teamSlice.actions;
 export default teamSlice.reducer;
 
