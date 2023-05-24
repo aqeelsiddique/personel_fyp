@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 const Timer = ({ duration, handleRound }) => {
   const [seconds, setSeconds] = useState(duration);
   const [hasTimedOut, setHasTimedOut] = useState(false);
+
   useEffect(() => {
     let timer;
 

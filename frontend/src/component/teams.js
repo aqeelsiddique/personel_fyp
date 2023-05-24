@@ -5,6 +5,9 @@ import { NavLink } from 'react-router-dom';
 import TeamMember from '../login2.png';
 import { useSelector } from 'react-redux';
 
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+
 const Teams = () => {
   const teams = useSelector((state) => state.teams.data);
   const selectedRound = useSelector((state) => state.teams.roundSelected);
@@ -23,15 +26,15 @@ const Teams = () => {
         }}
       >
         <div class="container">
-          <div class="row">
             <div className="team-title">
-              {selectedRound.replace('_', ' ')} Teams
+              {selectedRound.replace('_', ' ')} <span>Teams</span>
             </div>
+          <div class="row">
 
             {teams?.map((team, index) => (
               <div className="col-md-4">
                 <div className="card" key={Math.random() + index}>
-                  <div className="card-body">
+                  {/* <div className="card-body">
                     <h2 className="uni-name">{team.universityname}</h2>
                     <h3 className="team">{team.teamname}</h3>
 
@@ -40,12 +43,25 @@ const Teams = () => {
                       <p>{team.member2}</p>
                       <p>{team.member3}</p>
                     </div>
-                  </div>
+                  </div> */}
+
+                  <Card>
+                    <ListGroup className='teams-display' >
+                      <ListGroup.Item className='uniname'>{team.universityname}</ListGroup.Item>
+                      <ListGroup.Item className='teamname'>{team.teamname}</ListGroup.Item>
+                      <ListGroup.Item className="members"><p>{team.member1}</p>
+                        <p>{team.member2}</p>
+                        <p>{team.member3}</p></ListGroup.Item>
+                    </ListGroup>
+                  </Card>
+
                 </div>
               </div>
+
             ))}
+          </div>
             <div className="card-submit">
-              <button className="Color-White">
+              <button className="Color-White cancel-btn">
                 {' '}
                 <NavLink
                   to="/main2"
@@ -64,7 +80,6 @@ const Teams = () => {
                 </NavLink>{' '}
               </button>
             </div>
-          </div>
         </div>
       </div>
     </>

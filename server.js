@@ -81,7 +81,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-//static files
 app.use(express.static(path.join(__dirname, "./client/build")));
 
 app.get("*", function (req, res) {
