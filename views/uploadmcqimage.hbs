@@ -23,6 +23,9 @@
     border-radius: 3px 3px 0 0;
 
   }
+   .form-grouxp{
+    text-align: end;
+   }
 </style>
 <body>
       {{> sidebars}}
@@ -37,6 +40,9 @@
 
 <form action="/questions" method="post" class="table-wrapper" id="add_user" enctype="multipart/form-data">
 <h1>Create a Questions</h1>
+  <div class="form-grouxp">
+    <a href="/add_Question" class="btn btn-primary" class="imagetypemcq">Text</a>
+  </div>
     <select class="form-control" id="machine" name="select_subject" placeholder="Select subject" required="true">
       {{#if select_subject}}
       {{#each select_subject }}
@@ -55,17 +61,17 @@
     <input type="file" id="image" name="image" accept="image/*" required>
   </div>
   <div class="form-group">
-    <input type="text" id="option1" name="option1" class="form-control" placeholder='option2' required>
+    <input type="text" id="option1" name="option1" class="form-control" placeholder='option1' required>
   </div>
   <div>
 
     <input  type="text" id="option2" name="option2" class="form-control" placeholder='option2' required>
   </div class="form-group">
   <div>
-    <input type="text" id="option3" name="option3" class="form-control" placeholder='option2' required>
+    <input type="text" id="option3" name="option3" class="form-control" placeholder='option3' required>
   </div>
   <div class="form-group">
-    <input type="text" id="option4" name="option4" class="form-control" placeholder='option2' required>
+    <input type="text" id="option4" name="option4" class="form-control" placeholder='option4' required>
   </div>
     <div class="form-group">
     <input class="form-control" id="ans" placeholder='ans' name='ans' required="true"

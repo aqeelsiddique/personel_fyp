@@ -29,8 +29,14 @@
 
     
 </body>
-<form action="/update_Question/{{x.ques}}?_method=put" method="POST" class="table-wrapper">
-    <input type="hidden" name="_method" value="PUT">  {{!-- <div class="form-group">
+{{!-- <form action="/update_Question/{{x.ques}}?_method=put" method="POST"  class="table-wrapper">
+    <input type="hidden" name="_method" value="PUT">   --}}
+
+    <form action="/update_Question/{{x.ques}}?_method=put" method="POST" class="table-wrapper">
+    <input type="hidden" name="_method" value="PUT">
+    
+    
+    {{!-- <div class="form-group">
     <label for="name">Name: </label>
     <input class="form-control" id="name" type="text" placeholder="Name of process" name="name" required="true"
       value="{{process.name}}">
@@ -52,8 +58,8 @@
     </select>
   </div>
   <div class="form-group">
-    <input class="form-control" id="question" placeholder='question' name='question' required="true"
-      rows="5">{{process.question}}</input>
+    <input class="form-control" id="question" placeholder='question' name='ques' required="true"
+      rows="5">{{process.ques}}</input>
   </div>
   <div class="form-group">
     <input class="form-control" id="option1" placeholder='option1' name='option1' required="true"
@@ -75,7 +81,7 @@
     <input class="form-control" id="option2" placeholder='ans' name='ans' required="true"
       rows="5">{{process.ans}}</input>
   </div>
-  <button class="btn btn-primary" type="submit" onclick="showConfirmation(event)" >Submit</button>
+  <button class="btn btn-primary" type="submit" onclick="return confirm('Are you sure to update this record ?');" >Submit</button>
   
     <a href="/questionlists" class="btn btn-danger">
         <i class="fa fa-list-alt"></i>

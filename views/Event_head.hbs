@@ -60,17 +60,17 @@
         enctype="multipart/form-data">
 
         <div class="form-group">
-            <h1>Create Admin Acount</h1><br>
+            <h1>Create EventHead Profile</h1><br>
 
             <input type="text" class="form-control" name="name" placeholder="Enter Name" required>
             <hr>
-            <input type="text" class="form-control" name="email" placeholder="Enter Email" required>
+            <input type="email" class="form-control" name="email" placeholder="Enter Email" required>
             <hr>
-            <input type="text" class="form-control" name="password" placeholder="Password" required>
+            <input type="password" class="form-control" name="password" placeholder="Password" required>
             <hr>
-            <input type="text" class="form-control" name="cpassword" placeholder="Confirm Password" required><br>
+            <input type="password" class="form-control" name="cpassword" placeholder="Confirm Password" required><br>
             <div>
-                <label for="image">Image:</label>
+                <label for="image">Profile Image:</label>
                 <input type="file" id="profile" name="profile">
             </div><br><br>
             <button type="submit" class="btn btn-info" onclick="showConfirmation(event)">
@@ -79,7 +79,7 @@
             </button>
             <a href="/eventheadlists" class="btn btn-danger">
                 <i class="fa fa-list-alt"></i>
-                View All
+                View All Profiles
             </a>
         </div>
         <div class="signup-image">

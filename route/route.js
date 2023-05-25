@@ -54,12 +54,17 @@ const {
 } = require('../controller/round');
 
 const round = require('../model/round');
+const methodOverride = require('method-override');
+
 
 const team = require('../model/team');
 const question = require('../model/question');
 const Result = require('../model/resultmodel');
 module.exports = function (app) {
 const session = require('express-session');
+
+app.use(methodOverride('_method'));
+
 
   // app.use((session ({secret:config.SECRET_KEY})))
   //////////////////////////test 0001//////
@@ -267,6 +272,8 @@ const session = require('express-session');
     const questions = await question.find();
     res.json(questions);
   });
+  app.put('/update_Question', controller.updatequestion);
+
   app.get('/update_Question/:id', (req, res, next) => {
     let readquery = req.params.id;
     question
@@ -294,8 +301,7 @@ const session = require('express-session');
         return next(err);
       });
   });
-  app.put('/update_Question/:id', controller.updatequestion);
-  app.post('/delete_Question/:id', controller.deletequestion);
+  app.get('/delete_Question/:id', controller.deletequestion);
   //////////////////////End of Question portion////////////////////////
 
   ///////////////////////////////////////Team Section/////////////////////////////
@@ -528,22 +534,27 @@ app.post('/questions', upload.single('image'), (req, res) => {
 
 ///////////////////////////////////Stored a Results////////////////
 
+// Create a new result
+
 app.post('/results', async (req, res) => {
+  const { round, teams } = req.body;
+
   try {
-    const { round, teams } = req.body;
-    // Create a new result object
     const result = new Result({
       round,
-      teams
-    });
-    // Save the result to the database
-    await result.save();
+      teams,
+      
 
+    });
+
+    await result.save();
     res.status(201).json({ message: 'Result saved successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Error saving result', error });
+    console.error(error);
+    res.status(500).json({ message: 'Error saving result' });
   }
 });
+
 
 app.get('/filterresults', async (req, res) => {
   try {
@@ -558,12 +569,6 @@ app.get('/filterresults', async (req, res) => {
 });
 
 //////////////////////////////////End OF Result Code////////////////////
-
-
-
-
-
-
 
 
 

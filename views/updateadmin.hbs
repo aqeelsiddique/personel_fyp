@@ -63,11 +63,11 @@
             <br>
             <input type="text" class="form-control" name="name" placeholder="Enter Name" required>
             <hr>
-            <input type="text" class="form-control" name="email" placeholder="Enter Email" required>
+            <input type="email" class="form-control" name="email" placeholder="Enter Email" required>
             <hr>
-            <input type="text" class="form-control" name="password" placeholder="Password" required>
+            <input type="password" class="form-control" name="password" placeholder="Password" required>
             <hr>
-            <input type="text" class="form-control" name="cpassword" placeholder="Confirm Password" required><br>
+            <input type="password" class="form-control" name="cpassword" placeholder="Confirm Password" required><br>
             <div>
                 <label for="image">Image:</label>
                 <input type="file" id="profile" name="profile">
@@ -75,7 +75,7 @@
             <br>
 
 
-            <button type="submit" class="btn btn-info" onclick="showConfirmation(event)">
+            <button type="submit" class="btn btn-info" onclick="return confirm('Are you sure to update this record ?');">
                 <i class="fa fa-database"></i>
                 Submit
             </button>

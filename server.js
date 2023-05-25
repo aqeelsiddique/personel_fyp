@@ -66,7 +66,6 @@ hbs.registerPartial(
 const db =
   process.env.MONGODB_URI ||
   'mongodb+srv://Aqeel:aqeel12345@cluster0.uhg7y9z.mongodb.net/visiosparkwebsite?retryWrites=true&w=majority';
-
 // Connect to MongoDB instance
 mongoose
   .connect(db, {
@@ -80,15 +79,6 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
-
-//static files
-app.use(express.static(path.join(__dirname, "./frontend/build")));
-
-app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "./client/frontend/index.html"));
-});
-
-
 //Endpoints
 const port = process.env.PORT || 4001;
 app.listen(port, () => console.log(`Server started on port: ${port}`));

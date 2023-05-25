@@ -143,16 +143,16 @@ const Quiz = (props) => {
             </div>
             <div className="options" key={currentQuestion._id}>
               <p onClick={() => handleOptionSelect(currentQuestion.option1)}>
-                {currentQuestion.option1}
+                a. {currentQuestion.option1}
               </p>
               <p onClick={() => handleOptionSelect(currentQuestion.option2)}>
-                {currentQuestion.option2}
+                b. {currentQuestion.option2}
               </p>
               <p onClick={() => handleOptionSelect(currentQuestion.option3)}>
-                {currentQuestion.option3}
+                c. {currentQuestion.option3}
               </p>
               <p onClick={() => handleOptionSelect(currentQuestion.option4)}>
-                {currentQuestion.option4}
+                d. {currentQuestion.option4}
               </p>
             </div>
           </div>

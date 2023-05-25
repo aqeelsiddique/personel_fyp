@@ -1,20 +1,15 @@
 const mongoose = require('mongoose');
 
 const resultSchema = new mongoose.Schema({
-  round: {
-    type: Number,
-    required: true,
-  },
+  round: Number,
   teams: [
     {
-      universityname: {
-        type: String,
-        required: true,
-      },
-      score: {
-        type: Number,
-        required: true,
-      },
+      teamname: String,
+      member1: String,
+      member2: String,
+      member3: String,
+      universityname: String,
+      score: Number,
     },
   ],
 });

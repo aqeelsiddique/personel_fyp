@@ -1,13 +1,45 @@
-<!-- results.handlebars -->
-
 <style>
   .container-xl {
-    margin-top: 10%;
+    margin-top: 5%;
   }
 
   table {
     border-collapse: collapse;
     width: 100%;
+  }
+
+  .schedule {
+    text-align: center;
+  }
+
+  .schedule h1 {
+    font-size: 3.6rem;
+    font-weight: 800;
+  }
+
+  .schedule-table {
+    margin-top: 70px;
+    margin-bottom: 20px;
+
+  }
+
+  .schedule-table table {
+    margin: 10px 0px;
+  }
+
+  .schedule-table h2 {
+    background-color: #7522E6;
+    padding: 5px 5px;
+    color: white;
+    font-size: x-large;
+  }
+
+  .schedule-table .rounds table {
+    margin-bottom: 30px;
+  }
+
+  .schedule-table .rounds table thead tr {
+    background-color: #7522e6;
   }
 
   th,
@@ -27,6 +59,19 @@
 
   tr:hover {
     background-color: #ddd;
+  }
+
+
+  .styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+
+  .styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+
+  .styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
   }
 </style>
 
@@ -55,35 +100,46 @@
 
     {{/each}}
   </ul> --}}
-  <table>
-    <thead>
-      {{!-- <tr>
-        <th>Team Name</th>
-        <th>Member 1</th>
-        <th>Member 2</th>
-        <th>Member 3</th>
-        <th>University Name</th>
-      </tr> --}}
-    </thead>
-    <tbody>
-      <h1>Results</h1>
 
-      <ul>
-        {{#each results}}
-        <li>
-          <p>Round: {{round}}</p>
-          <ul>
-            {{#each teams}}
-            <li>
-              <p>University Name: {{universityname}}</p>
-              <p>Score: {{score}}</p>
-            </li>
-            {{/each}}
-          </ul>
+  <div class="schedule">
+    <h1>Quiz Teams Results</h1>
+  </div>
 
-        </li>
-        {{/each}}
-      </ul>
+  <div class="schedule-table">
+    <div class="rounds">
 
+      {{#each results}}
+      <h2>Round {{this.round}}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Team Name</th>
+            <th>Member 1</th>
+            <th>Member 2</th>
+            <th>Member 3</th>
+            <th>University Name</th>
+            <th>Score</th>
 
+          </tr>
+        </thead>
+        <tbody>
+          {{#each this.teams}}
+          <tr>
+            <td>{{this.teamname}}</td>
+            <td>{{this.member1}}</td>
+            <td>{{this.member2}}</td>
+            <td>{{this.member3}}</td>
+            <td>{{this.universityname}}</td>
+            <td>{{this.score}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      {{/each}}
 
+    </div>
+    <br>
+  </div>
+
+</div>
+</div>

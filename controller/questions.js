@@ -1,4 +1,3 @@
-var User = require("../model/user");
 const subjectvs = require("../model/user");
 const Question = require("../model/question");
 const { body, validationResult } = require("express-validator");
@@ -40,7 +39,7 @@ const process_create_post1 = [
     // Extract the validation errors from a request.
     const errors = validationResult(req);
     // Create a Process object with escaped and trimmed data.
-    const process = new question({
+    const process = new Question({
       select_subject: req.body.select_subject,
       ques: req.body.ques,
       option1: req.body.option1,
@@ -76,7 +75,7 @@ const process_create_post1 = [
     } else {
       // Check if the question already exists in the database.
       // Check if the question already exists in the database.
-      question
+      Question
         .findOne({
           ques: process.ques,
           select_subject: process.select_subject,
@@ -144,30 +143,29 @@ const question_list = function (req, res, next) {
 
 ///////////////Update A data
 const updatequestion = (req, res) => {
-  let readquery = req.params.id;
-  question
-    .updateOne(
-      { question: readquery },
-      {
-        $set: {
-          select_subject: req.body.select_subject,
-          question: req.body.question,
-          option1: req.body.option1,
-          option2: req.body.option2,
-          option3: req.body.option3,
-          option4: req.body.option4,
-          ans: req.body.ans,
-        },
-      }
-    )
+  const readquery = req.params.id;
+  Question.updateOne(
+    { ques: readquery },
+    {
+      $set: {
+        select_subject: req.body.select_subject,
+        ques: req.body.ques,
+        option1: req.body.option1,
+        option2: req.body.option2,
+        option3: req.body.option3,
+        option4: req.body.option4,
+        ans: req.body.ans,
+      },
+    }
+  )
     .then((x) => {
-      // req.flash('sucess', 'Your Data has update')
       res.redirect("/add_Question");
     })
     .catch((y) => {
       console.log(y);
     });
 };
+
 
 // Delete a user with specified user id in the request
 const deletequestion = (req, res) => {
@@ -179,6 +177,9 @@ const deletequestion = (req, res) => {
     }
   });
 };
+
+
+
 module.exports = {
   question_list,
   updatequestion,
