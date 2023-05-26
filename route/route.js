@@ -301,6 +301,9 @@ app.use(methodOverride('_method'));
         return next(err);
       });
   });
+
+
+  
   app.get('/delete_Question/:id', controller.deletequestion);
   //////////////////////End of Question portion////////////////////////
 
@@ -447,6 +450,7 @@ app.use(methodOverride('_method'));
   app.get('/profile', (req, res) => {
     res.render('profileadmin.hbs');
   });
+  
   app.post('/adminreg', upload.single('profile'), adminreg);
   app.get('/admininfo', admininfo);
   app.get('/adminlists', admin_lists);

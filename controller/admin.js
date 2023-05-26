@@ -4,11 +4,6 @@ const bcrypt = require("bcryptjs");
 const express = require('express');
 const session = require('express-session');
 const catchayncerror = require("../middleware/catchayncerror");
-
-
-
-
-
 const nodemailer = require ('nodemailer');
 const ErrorHandler = require("../untils/errorhandler");
 const sendEmail = require("../untils/senEmail");
