@@ -7,18 +7,15 @@ const config = require('../config/config');
 const subject = require('../controller/subject');
 const subjectmodel = require('../model/subject');
 const Team = require('../controller/team');
-const jwt = require('jsonwebtoken');
 const { body, validationResult } = require("express-validator");
-
+const csv = require('csv-parser');
 const bcrypt = require('bcryptjs');
 const dashboard = require('../controller/dashboard');
-const querystring = require('querystring');
-const nodemailer = require('nodemailer');
-const crypto = require('crypto');
 const app = express();
 const admin = require("../model/admin");
 const async = require('async');
 const flash = require('connect-flash');
+const fs = require('fs');
 
 app.use(cookieParser());
 app.use(flash());
@@ -26,12 +23,9 @@ app.use(flash());
 const {
   eventhead_list,
   eventdelete,
-  updateprofile,
   updateeventhead,
 } = require('../controller/evenhead');
 const multer = require('multer');
-var fs = require('fs');
-const image = require('../model/image');
 const User = require('../model/Head');
 // const bcrypt = require("bcryptjs");
 const path = require('path');
@@ -40,9 +34,7 @@ const {
   admininfo,
   admin_lists,
   admindelete,
-  adminlogin,
-  adminlogout,
-  forgetPassword,
+  
   logout,
   updateadmin
 } = require('../controller/admin');
@@ -69,12 +61,36 @@ app.use(methodOverride('_method'));
   // app.use((session ({secret:config.SECRET_KEY})))
   //////////////////////////test 0001//////
   // SET STORAGE
+  // let storage = multer.diskStorage({
+  //   destination: './public/images', //directory (folder) setting
+  //   filename: (req, file, cb) => {
+  //     cb(null, Date.now() + file.originalname); // file name setting
+  //   },
+  // });
+  // var upload = multer({
+  //   storage: storage,
+  //   fileFilter: (req, file, cb) => {
+  //     if (
+  //       file.mimetype == 'image/jpeg' ||
+  //       file.mimetype == 'image/jpg' ||
+  //       file.mimetype == 'image/png' ||
+  //       file.mimetype == 'image/gif'
+        
+  //     ) {
+  //       cb(null, true);
+  //     } else {
+  //       cb(null, false);
+  //       cb(new Error('Only jpeg,  jpg , png, and gif Image allow'));
+  //     }
+  //   },
+  // });
   let storage = multer.diskStorage({
-    destination: './public/images', //directory (folder) setting
+    destination: './public/images', // Directory (folder) setting
     filename: (req, file, cb) => {
-      cb(null, Date.now() + file.originalname); // file name setting
+      cb(null, Date.now() + file.originalname); // File name setting
     },
   });
+  
   var upload = multer({
     storage: storage,
     fileFilter: (req, file, cb) => {
@@ -82,15 +98,16 @@ app.use(methodOverride('_method'));
         file.mimetype == 'image/jpeg' ||
         file.mimetype == 'image/jpg' ||
         file.mimetype == 'image/png' ||
-        file.mimetype == 'image/gif'
+        file.mimetype == 'image/gif' ||
+        file.mimetype == 'text/csv'
       ) {
         cb(null, true);
       } else {
-        cb(null, false);
-        cb(new Error('Only jpeg,  jpg , png, and gif Image allow'));
+        cb(new Error('Only JPEG, JPG, PNG, GIF, and CSV files are allowed'));
       }
     },
   });
+  
 
   
   ///////////test image code
@@ -113,6 +130,92 @@ app.use(methodOverride('_method'));
   //   res.render('image', { images: documents });
 
   // });
+
+  // Define the file upload endpoint
+
+app.get('/uploadcsv' ,(req, res) =>{
+  Promise.all([subjectmodel.find().lean().exec()]).then(([select_subject]) => {
+    res.render("csvmcqfile.hbs", {
+      select_subject: select_subject,
+    });
+
+  });
+
+})
+app.post('/uploadcsv', upload.single('csvFile'), (req, res) => {
+  // File has been uploaded, now parse it
+  const file = req.file;
+  if (!file) {
+    return res.status(400).json({ message: 'No file uploaded' });
+  }
+
+  // Read the uploaded CSV file and extract the data
+  const results = [];
+  fs.createReadStream(file.path)
+    .pipe(csv())
+    .on('data', (data) => {
+      results.push(data);
+    })
+    .on('end', () => {
+      // Clean up the uploaded file
+      fs.unlinkSync(file.path);
+
+      // Process the data and save it to MongoDB
+      async.eachSeries(results, (item, callback) => {
+        // Extract the required fields from the CSV data
+        const {
+          ques,
+          option1,
+          option2,
+          option3,
+          option4,
+          ans,
+          additionalField1,
+          additionalField2,
+          select_subject
+        } = item;
+
+        // Find the subject in the subject database collection
+        subjectmodel.findOne({ subjectName: select_subject })
+          .then((foundSubject) => {
+            if (!foundSubject) {
+              throw new Error('Selected subject not found in the database');
+            }
+
+            // Create a new document based on the CSV data and the found subject
+            const newQuestion = new question({
+              select_subject: foundSubject._id,
+              ques,
+              option1,
+              option2,
+              option3,
+              option4,
+              ans,
+              additionalField1,
+              additionalField2
+            });
+
+            return newQuestion.save();
+          })
+          .then(() => {
+            callback(); // Move to the next iteration
+          })
+          .catch((error) => {
+            callback(error); // Pass the error to the callback to handle it
+          });
+      }, (error) => {
+        if (error) {
+          return res.status(500).json({ message: 'Error saving questions', error: error.message });
+        }
+
+        res.status(200).json({ message: 'File uploaded and data saved to MongoDB' });
+      });
+    });
+});
+
+
+
+
 
   ///////////////////dashboard code///////
   app.get('/dashboard', dashboard.eventhead_list);

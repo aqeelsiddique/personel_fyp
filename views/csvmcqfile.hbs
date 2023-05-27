@@ -1,0 +1,22 @@
+<body>
+<form method="POST" action="/uploadcsv" id="add_user" class="table-wrapper" enctype="multipart/form-data">
+
+   <select class="form-control" id="machine" name="select_subject" placeholder="Select subject" required="true">
+      {{#if select_subject}}
+      {{#each select_subject }}
+                  <option type="text" value="" disabled selected hidden>Select a Subject</option>
+
+      <option value={{this.name}} {{isSelected this._id ../question.select_subject.name}}>{{this.name}}</option>
+      {{/each}}
+      {{!-- {{else}}
+      {{#each select_subject}}
+      <option value={{this._id}}>{{this.name}}</option>
+      {{/each}} --}}
+      {{/if}}
+    </select>
+  <h1>Upload CSV File</h1>
+ 
+    <input type="file" name="csvFile">
+    <button type="submit">Upload</button>
+  </form>
+</body>

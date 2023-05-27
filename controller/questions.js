@@ -73,7 +73,7 @@ const process_create_post1 = [
       );
       return;
     } else {
-      // Check if the question already exists in the database.
+      // Check if the question already exists in  database.
       // Check if the question already exists in the database.
       Question
         .findOne({
