@@ -1,22 +1,80 @@
+{{!-- <h1>{{title}}</h1> --}}
+<style>
+  .form-control {
+    margin: 15px;
+    border-radius: 3px 3px 0 0;
+  }
+
+  .table-wrapper {
+    margin-top: 70px;
+    margin-left: 15%;
+    margin-right: 30%;
+    border-radius: 3px 3px 0 0;
+  }
+
+  h1 {
+    background: #7522E6;
+    color: #fff;
+    padding: 16px 30px;
+    min-width: 100%;
+    margin: -20px -25px 10px;
+    border-radius: 3px 3px 0 0;
+    font-size: x-large;
+
+
+  }
+
+  .form-grouxp {
+    text-align: end;
+
+  }
+
+  .csvbutton {
+    text-align: start;
+  }
+</style>
+
 <body>
-<form method="POST" action="/uploadcsv" id="add_user" class="table-wrapper" enctype="multipart/form-data">
+  {{> sidebars}}
 
-   <select class="form-control" id="machine" name="select_subject" placeholder="Select subject" required="true">
-      {{#if select_subject}}
-      {{#each select_subject }}
-                  <option type="text" value="" disabled selected hidden>Select a Subject</option>
+  {{> navbar}}
 
-      <option value={{this.name}} {{isSelected this._id ../question.select_subject.name}}>{{this.name}}</option>
-      {{/each}}
-      {{!-- {{else}}
-      {{#each select_subject}}
-      <option value={{this._id}}>{{this.name}}</option>
-      {{/each}} --}}
-      {{/if}}
-    </select>
-  <h1>Upload CSV File</h1>
- 
-    <input type="file" name="csvFile">
-    <button type="submit">Upload</button>
+
+</body>
+
+
+<body>
+  <form method="POST" action="/uploadcsv" id="add_user" class="table-wrapper" enctype="multipart/form-data">
+    <h1>Upload CSV File</h1>
+    <div class="form-grouxp">
+      <a href="/imageques" class="btn btn-primary" class="imagetypemcq">Image</a>
+      <a href="/add_Question" class="btn btn-primary" class="imagetypemcq">Text</a>
+
+
+
+      <select class="form-control" id="machine" name="select_subject" placeholder="Select subject" required="true">
+        {{#if select_subject}}
+        {{#each select_subject }}
+        <option type="text" value="" disabled selected hidden>Select a Subject</option>
+
+        <option value={{this.name}} {{isSelected this._id ../question.select_subject.name}}>{{this.name}}</option>
+        {{/each}}
+        {{!-- {{else}}
+        {{#each select_subject}}
+        <option value={{this._id}}>{{this.name}}</option>
+        {{/each}} --}}
+        {{/if}}
+
+      </select>
+      <br>
+      <div class="csvbutton">
+        <label for="">Upload Csv File</label>
+
+        <input type="file" name="csvFile">
+        <button class="btn btn-primary" type="submit" onclick="showConfirmation(event)">Upload</button>
+
+      </div>
+
+
   </form>
 </body>

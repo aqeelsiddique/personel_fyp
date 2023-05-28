@@ -5,6 +5,10 @@ var mongoose = require("mongoose");
 const subject = require("../model/subject");
 const async = require("async");
 const question = require("../model/question");
+const fs = require('fs');
+const csv = require('csv-parser');
+
+
 ///////////////////////////questions Portion COntroller Code /////////////////////Addmin site
 // Handle Question create on POST.
 // Display process create form on GET.
@@ -75,49 +79,46 @@ const process_create_post1 = [
     } else {
       // Check if the question already exists in  database.
       // Check if the question already exists in the database.
-      Question
-        .findOne({
-          ques: process.ques,
-          select_subject: process.select_subject,
-        })
-        .exec(function (err, found_question) {
-          if (err) {
-            return next(err);
-          }
-          if (found_question) {
-            // The question already exists in the database.
-            async.parallel(
-              {
-                select_subject: function (callback) {
-                  subject.find(callback);
-                },
+      Question.findOne({
+        ques: process.ques,
+        select_subject: process.select_subject,
+      }).exec(function (err, found_question) {
+        if (err) {
+          return next(err);
+        }
+        if (found_question) {
+          // The question already exists in the database.
+          async.parallel(
+            {
+              select_subject: function (callback) {
+                subject.find(callback);
               },
-              function (err, results) {
-                if (err) {
-                  return next(err);
-                }
-                results.select_subject = results.select_subject || []; // Make sure the results object has a select_subject property
-          
-                res.render("question", {
-                  title: "Create Process",
-                  select_subject: results.select_subject,
-                  process: process,
-                  error: "The question already exists in the database.",
-                });
-              }
-            );
-          } else {
-            // The question does not exist in the database. Save process.
-            process.save(function (err) {
+            },
+            function (err, results) {
               if (err) {
                 return next(err);
               }
-              //successful - redirect to new process record.
-              res.redirect("/add_Question");
-            });
-          }
-          
-        });
+              results.select_subject = results.select_subject || []; // Make sure the results object has a select_subject property
+
+              res.render("question", {
+                title: "Create Process",
+                select_subject: results.select_subject,
+                process: process,
+                error: "The question already exists in the database.",
+              });
+            }
+          );
+        } else {
+          // The question does not exist in the database. Save process.
+          process.save(function (err) {
+            if (err) {
+              return next(err);
+            }
+            //successful - redirect to new process record.
+            res.redirect("/add_Question");
+          });
+        }
+      });
     }
   },
 ];
@@ -139,7 +140,6 @@ const question_list = function (req, res, next) {
       console.log(list_question);
     });
 };
-
 
 ///////////////Update A data
 const updatequestion = (req, res) => {
@@ -166,7 +166,6 @@ const updatequestion = (req, res) => {
     });
 };
 
-
 // Delete a user with specified user id in the request
 const deletequestion = (req, res) => {
   Question.findByIdAndDelete(req.params.id, (err, doc) => {
@@ -178,7 +177,89 @@ const deletequestion = (req, res) => {
   });
 };
 
+///////////upload csv mcq upload code
 
+const csvmcqfile = (req, res) => {
+  const file = req.file;
+  if (!file) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
+
+  // Read the uploaded CSV file and extract the data
+  const results = [];
+  fs.createReadStream(file.path)
+    .pipe(csv())
+    .on("data", (data) => {
+      results.push(data);
+    })
+    .on("end", () => {
+      // Clean up the uploaded file
+      fs.unlinkSync(file.path);
+
+      // Process the data and save it to MongoDB
+      async.eachSeries(
+        results,
+        (item, callback) => {
+          // Extract the required fields from the CSV data
+          const {
+            ques,
+            option1,
+            option2,
+            option3,
+            option4,
+            ans,
+            additionalField1,
+            additionalField2,
+            select_subject,
+          } = item;
+
+          // Find the subject in the subject database collection
+          subject
+            .findOne({ subjectName: select_subject })
+            .then((foundSubject) => {
+              if (!foundSubject) {
+                throw new Error("Selected subject not found in the database");
+              }
+
+              // Create a new document based on the CSV data and the found subject
+              const newQuestion = new question({
+                select_subject: req.body.select_subject,
+                ques,
+                option1,
+                option2,                
+                option3,
+                option4,
+                ans,
+                additionalField1,
+                additionalField2,
+              });
+
+              return newQuestion.save();
+            })
+            .then(() => {
+              callback(); // Move to the next iteration
+            })
+            .catch((error) => {
+              callback(error); // Pass the error to the callback to handle it
+            });
+        },
+        (error) => {
+          if (error) {
+            return res
+              .status(500)
+              .json({
+                message: "Error saving questions",
+                error: error.message,
+              });
+          }
+
+          res
+            .status(200)
+            .json({ message: "File uploaded and data saved to MongoDB" });
+        }
+      );
+    });
+};
 
 module.exports = {
   question_list,
@@ -186,4 +267,5 @@ module.exports = {
   deletequestion,
   process_create_post1,
   process_create_get1,
+  csvmcqfile
 };

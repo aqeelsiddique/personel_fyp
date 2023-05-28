@@ -26,6 +26,7 @@
 
   .form-grouxp {
     text-align: end;
+  
   }
 </style>
 
@@ -47,7 +48,10 @@
     <h1>Create a Questions</h1>
     <div class="form-grouxp">
       <a href="/imageques" class="btn btn-primary" class="imagetypemcq">Image</a>
+            <a href="/uploadcsv" class="btn btn-primary" class="imagetypemcq">csvFile</a>
+
     </div>
+    
     <select class="form-control" id="machine" name="select_subject" placeholder="Select subject" required="true">
       {{#if select_subject}}
       {{#each select_subject }}

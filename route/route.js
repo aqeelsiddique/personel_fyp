@@ -133,85 +133,6 @@ app.use(methodOverride('_method'));
 
   // Define the file upload endpoint
 
-app.get('/uploadcsv' ,(req, res) =>{
-  Promise.all([subjectmodel.find().lean().exec()]).then(([select_subject]) => {
-    res.render("csvmcqfile.hbs", {
-      select_subject: select_subject,
-    });
-
-  });
-
-})
-app.post('/uploadcsv', upload.single('csvFile'), (req, res) => {
-  // File has been uploaded, now parse it
-  const file = req.file;
-  if (!file) {
-    return res.status(400).json({ message: 'No file uploaded' });
-  }
-
-  // Read the uploaded CSV file and extract the data
-  const results = [];
-  fs.createReadStream(file.path)
-    .pipe(csv())
-    .on('data', (data) => {
-      results.push(data);
-    })
-    .on('end', () => {
-      // Clean up the uploaded file
-      fs.unlinkSync(file.path);
-
-      // Process the data and save it to MongoDB
-      async.eachSeries(results, (item, callback) => {
-        // Extract the required fields from the CSV data
-        const {
-          ques,
-          option1,
-          option2,
-          option3,
-          option4,
-          ans,
-          additionalField1,
-          additionalField2,
-          select_subject
-        } = item;
-
-        // Find the subject in the subject database collection
-        subjectmodel.findOne({ subjectName: select_subject })
-          .then((foundSubject) => {
-            if (!foundSubject) {
-              throw new Error('Selected subject not found in the database');
-            }
-
-            // Create a new document based on the CSV data and the found subject
-            const newQuestion = new question({
-              select_subject: foundSubject._id,
-              ques,
-              option1,
-              option2,
-              option3,
-              option4,
-              ans,
-              additionalField1,
-              additionalField2
-            });
-
-            return newQuestion.save();
-          })
-          .then(() => {
-            callback(); // Move to the next iteration
-          })
-          .catch((error) => {
-            callback(error); // Pass the error to the callback to handle it
-          });
-      }, (error) => {
-        if (error) {
-          return res.status(500).json({ message: 'Error saving questions', error: error.message });
-        }
-
-        res.status(200).json({ message: 'File uploaded and data saved to MongoDB' });
-      });
-    });
-});
 
 
 
@@ -367,6 +288,9 @@ app.post('/uploadcsv', upload.single('csvFile'), (req, res) => {
       res.status(500).json({ message: err.message });
     }
   });
+
+
+  ///////////////////////questions code 
   app.get('/add_Question', controller.process_create_get1);
   app.post('/add_Question', Controller.process_create_post1);
   app.get('/questionlists', controller.question_list);
@@ -445,6 +369,22 @@ app.post('/uploadcsv', upload.single('csvFile'), (req, res) => {
         return next(err);
       });
   });
+
+
+
+  app.get('/uploadcsv' ,(req, res) =>{
+    Promise.all([subjectmodel.find().lean().exec()]).then(([select_subject]) => {
+      res.render("csvmcqfile.hbs", {
+        select_subject: select_subject,
+      });
+  
+    });
+  
+  })
+  app.post('/uploadcsv', upload.single('csvFile'), controller.csvmcqfile );
+  
+  
+  
 
   ///////////////////////////////////Team Section End//////////////////////////////////
   //////////////////EventHead Section////////////////////
