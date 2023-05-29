@@ -1,12 +1,12 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import { ClipLoader } from 'react-spinners';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import SelectQuiz from '../sub.png';
-import Timer from './Timer';
-import './index.css';
-import { setCurrentTeam, setTeamScore } from '../redux/features/Team';
+import React from "react";
+import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import SelectQuiz from "../sub.png";
+import Timer from "./Timer";
+import "./index.css";
+import { setCurrentTeam, setTeamScore } from "../redux/features/Team";
 // import React from 'react';
 // import Popup from 'reactjs-popup';
 // import 'reactjs-popup/dist/index.css';
@@ -29,10 +29,10 @@ const Quiz = (props) => {
     return (
       <div
         style={{
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <ClipLoader size="30" />
@@ -43,16 +43,15 @@ const Quiz = (props) => {
     return (
       <div
         style={{
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-      {/* <Popup posistion=' right center'  width='300px' height='300px'> */}
-    <div> No Questions Found</div>
-  {/* </Popup> */}
-       
+        {/* <Popup posistion=' right center'  width='300px' height='300px'> */}
+        <div> No Questions Found</div>
+        {/* </Popup> */}
       </div>
     );
   }
@@ -63,10 +62,10 @@ const Quiz = (props) => {
   const handleRound = () => {
     // Now move to next Team for current Round, but first we will make sure round is also completed
     if (currentTeam + 1 === totalTeams) {
-      navigate('/result', { state: { roundCompleted: true } });
+      navigate("/result", { state: { roundCompleted: true } });
     } else {
       dispatch(setCurrentTeam(currentTeam + 1));
-      navigate('/subject');
+      navigate("/subject");
     }
   };
 
@@ -75,7 +74,7 @@ const Quiz = (props) => {
       selectedOption.trim().toLowerCase() ===
       currentQuestion.ans.trim().toLowerCase()
     ) {
-      toast.success('Correct !');
+      toast.success("Correct !");
       dispatch(
         setTeamScore({
           name: teams[currentTeam]?.teamname,
@@ -83,7 +82,7 @@ const Quiz = (props) => {
         })
       );
     } else {
-      toast.error('Wrong !');
+      toast.error("Wrong !");
     }
     handleRound();
   };
@@ -94,11 +93,11 @@ const Quiz = (props) => {
         className="quiz"
         style={{
           backgroundImage: `url(${SelectQuiz})`,
-          backgroundPosition: 'center center',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          width: '100%',
-          height: '100vh',
+          backgroundPosition: "center center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          width: "100%",
+          height: "100vh",
         }}
       >
         <div className="container">
@@ -106,10 +105,12 @@ const Quiz = (props) => {
             <div className="row">
               <div className="col-lg-4 ">
                 {/* <h2 className="name">Team {currentTeam + 1}</h2> */}
-                <h2 className="name">{teams[currentTeam].universityname || 'University Name'}</h2>
+                <h2 className="name">
+                  {teams[currentTeam].universityname || "University Name"}
+                </h2>
               </div>
               <div className="col-lg-4 ">
-              <h2 className='round'>{subject}</h2>
+                <h2 className="round">{subject}</h2>
                 {/* <h2 className="round">{[currentSubject].name}</h2> */}
               </div>
               <div className="col-lg-4   timer">
@@ -132,10 +133,15 @@ const Quiz = (props) => {
                   }}
                 >
                   <img
-  src={"/images/" + currentQuestion.image}
-  alt="Cat playing with a ball"
-  style={{ width: "100%" ,maxWidth: "500px", height: "200px", maxHeight:"300px" }}
-/>
+                    src={"/images/" + currentQuestion.image}
+                    alt="Cat playing with a ball"
+                    style={{
+                      width: "100%",
+                      maxWidth: "500px",
+                      height: "200px",
+                      maxHeight: "300px",
+                    }}
+                  />
                 </div>
               ) : (
                 currentQuestion.ques
@@ -162,10 +168,10 @@ const Quiz = (props) => {
           >
             Next Question
           </button> */}
-
         </div>
-          <div className='current-score'>
-          <p> Current Score: {teams[currentTeam]?.score || 0}</p></div>
+        <div className="current-score">
+          <p> Current Score: {teams[currentTeam]?.score || 0}</p>
+        </div>
       </div>
     </>
   );

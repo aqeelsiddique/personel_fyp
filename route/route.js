@@ -299,6 +299,9 @@ app.use(methodOverride('_method'));
     const questions = await question.find();
     res.json(questions);
   });
+
+
+  
   app.put('/update_Question', controller.updatequestion);
 
   app.get('/update_Question/:id', (req, res, next) => {
