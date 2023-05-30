@@ -82,7 +82,7 @@ const Quiz = (props) => {
         })
       );
     } else {
-      toast.error("Wrong !");
+      toast.error("Wrong!");
     }
     handleRound();
   };
