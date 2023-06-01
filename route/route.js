@@ -224,52 +224,63 @@ module.exports = function (app) {
     res.render("subjectwiseque.hbs", { questions });
   });
 
+  // app.get('/questions/:id', async (req, res) => {
+  //   try {
+  //     const encodedId = req.params.id;
+  //     const subjectId = decodeURI(encodedId);
+  //     let questions;
+  //     if (subjectId) {
+  //       questions = await question.find({ select_subject: subjectId });
+
+  //     } else {
+  //       throw new Error('No questions found');
+  //     }
+  //     res.status(200).send(questions);
+  //   } catch (error) {
+  //     res.status(500).send(error);
+  //   }
+  // });
+
+
+
   app.get('/questions/:id', async (req, res) => {
+
     try {
       const encodedId = req.params.id;
-      const subjectId = decodeURI(encodedId);
-      let questions;
+      const subjectId = decodeURI(encodedId); 
       if (subjectId) {
-        questions = await question.find({ select_subject: subjectId });
-
+        // Find questions based on the subjectId
+        const questions = await question.find({ select_subject: subjectId });
+        if (questions.length > 0) {
+          const questionToShow = questions[0]; 
+          // Remove the questionToShow from the original collection
+          await question.findByIdAndRemove(questionToShow._id);
+          // Create a new document in the CheckedQuestion collection
+          const checkedQuestion = new CheckedQuestion({
+            select_subject: questionToShow.select_subject,
+            ques: questionToShow.ques,
+            option1: questionToShow.option1,
+            option2: questionToShow.option2,
+            option3: questionToShow.option3,
+            option4: questionToShow.option4,
+            ans: questionToShow.ans,
+          });
+         // Save the checked question in the CheckedQuestion collection
+          await checkedQuestion.save();
+          // Log the checked question
+          console.log("Checked Question:", checkedQuestion);
+          // Send the questionToShow as the response
+          res.status(200).send(questionToShow);
+        } else {
+          throw new Error('No questions found');
+        }
       } else {
-        throw new Error('No questions found');
+        throw new Error('No subject specified');
       }
-      res.status(200).send(questions);
     } catch (error) {
       res.status(500).send(error);
     }
   });
-
-  // app.get('/questions/:id', async (req, res) => {
-  //   try {
-  //     const subjectId = req.params.id;
-  //     const question = await question.findOneAndDelete({ select_subject: subjectId });
-  
-  //     if (question) {
-  //       // Create a new document in the CheckedQuestion collection
-  //       const checkedQuestion = new CheckedQuestion({
-  //         select_subject: question.select_subject,
-  //         ques: question.ques,
-  //         option1: question.option1,
-  //         option2: question.option2,
-  //         option3: question.option3,
-  //         option4: question.option4,
-  //         ans: question.ans,
-  //       });
-  //       await checkedQuestion.save();
-  
-  //       res.status(200).json(question);
-  //     } else {
-  //       throw new Error('No questions found');
-  //     }
-  //   } catch (error) {
-  //     res.status(500).json({ error: error.message });
-  //   }
-  // });
-  
-  
-
 
 
 
