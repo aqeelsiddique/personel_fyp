@@ -201,6 +201,8 @@ const Quiz = (props) => {
   const timeDuration = useSelector((state) => state.timer.maxTime);
   const subject = useSelector((state) => state.teams.selectedSubject);
 
+
+
   // Loading state: Display spinner if questions are still loading
   if (loading) {
     return (
@@ -359,7 +361,6 @@ const Quiz = (props) => {
               </div>
             )}
           </div>
-         
         </div>
         <div className="current-score">
           <p> Current Score: {teams[currentTeam]?.score || 0}</p>
