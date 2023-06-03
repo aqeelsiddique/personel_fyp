@@ -178,6 +178,7 @@
 // };
 
 // export default Quiz;
+
 import React from "react";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
@@ -200,9 +201,6 @@ const Quiz = (props) => {
   const questions = useSelector((state) => state.questions.data);
   const timeDuration = useSelector((state) => state.timer.maxTime);
   const subject = useSelector((state) => state.teams.selectedSubject);
-
-
-
   // Loading state: Display spinner if questions are still loading
   if (loading) {
     return (
