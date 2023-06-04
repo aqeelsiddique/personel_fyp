@@ -57,32 +57,8 @@ module.exports = function (app) {
 
   app.use(methodOverride("_method"));
 
-  // app.use((session ({secret:config.SECRET_KEY})))
-  //////////////////////////test 0001//////
-  // SET STORAGE
-  // let storage = multer.diskStorage({
-  //   destination: './public/images', //directory (folder) setting
-  //   filename: (req, file, cb) => {
-  //     cb(null, Date.now() + file.originalname); // file name setting
-  //   },
-  // });
-  // var upload = multer({
-  //   storage: storage,
-  //   fileFilter: (req, file, cb) => {
-  //     if (
-  //       file.mimetype == 'image/jpeg' ||
-  //       file.mimetype == 'image/jpg' ||
-  //       file.mimetype == 'image/png' ||
-  //       file.mimetype == 'image/gif'
-
-  //     ) {
-  //       cb(null, true);
-  //     } else {
-  //       cb(null, false);
-  //       cb(new Error('Only jpeg,  jpg , png, and gif Image allow'));
-  //     }
-  //   },
-  // });
+  
+  
   let storage = multer.diskStorage({
     destination: "./public/images", // Directory (folder) setting
     filename: (req, file, cb) => {
@@ -142,6 +118,7 @@ module.exports = function (app) {
   app.get("/list_rounds", round_list);
   app.get("/delround/:id", delround);
   app.put("/editround/:id", roundupdate);
+  
   app.get("/editround/:id", (req, res) => {
     let readquery = req.params.id;
     round.findOne({ roundname: readquery }).then((x) => {
@@ -240,91 +217,6 @@ module.exports = function (app) {
   //     res.status(500).send(error);
   //   }
   // });
-
-
-////////////////////////testing code//////////////////
-  // app.get('/questions/:id', async (req, res) => {
-
-  //   try {
-  //     const encodedId = req.params.id;
-  //     const subjectId = decodeURI(encodedId); 
-  //     if (subjectId) {
-  //       // Find questions based on the subjectId
-  //       const questions = await question.find({ select_subject: subjectId });
-  //       if (questions.length > 0) {
-  //         const questionToShow = questions[0]; 
-  //         // Remove the questionToShow from the original collection
-  //         await question.findByIdAndRemove(questionToShow._id);
-  //         // Create a new document in the CheckedQuestion collection
-  //         const checkedQuestion = new CheckedQuestion({
-  //           select_subject: questionToShow.select_subject,
-  //           ques: questionToShow.ques,
-  //           option1: questionToShow.option1,
-  //           option2: questionToShow.option2,
-  //           option3: questionToShow.option3,
-  //           option4: questionToShow.option4,
-  //           ans: questionToShow.ans,
-  //         });
-  //        // Save the checked question in the CheckedQuestion collection
-  //         await checkedQuestion.save();
-  //         // Log the checked question
-  //         console.log("Checked Question:", checkedQuestion);
-  //         // Send the questionToShow as the response
-  //         res.status(200).send(questionToShow);
-  //       } else {
-  //         throw new Error('No questions found');
-  //       }
-  //     } else {
-  //       throw new Error('No subject specified');
-  //     }
-  //   } catch (error) {
-  //     res.status(500).send(error);
-  //   }
-  // });
-
-
-  // app.get('/questions/:id', async (req, res) => {
-  //   try {
-  //     const encodedId = req.params.id;
-  //     const subjectId = decodeURI(encodedId);
-  //     if (subjectId) {
-  //       // Find questions based on the subjectId
-  //       const questions = await question.find({ select_subject: subjectId });
-  //       if (questions.length > 0) {
-  //         const questionToShow = questions[0];
-  //         // Remove the questionToShow from the original collection
-  //         await question.findByIdAndRemove(questionToShow._id);
-
-
-  //          res.status(200).send(questions);
-
-  //               // Create a new document in the AskedQuestion collection
-  //       const askedQuestion = new CheckedQuestion({
-  //         select_subject: questionToShow.select_subject,
-  //         ques: questionToShow.ques,
-  //         option1: questionToShow.option1,
-  //         option2: questionToShow.option2,
-  //         option3: questionToShow.option3,
-  //         option4: questionToShow.option4,
-  //         ans: questionToShow.ans,
-  //       });
-
-  //       // Save the asked question in the AskedQuestion collection
-  //       await askedQuestion.save();
-
-       
-           
-  //       } else {
-  //         throw new Error('No questions found');
-  //       }
-  //     } else {
-  //       throw new Error('No subject specified');
-  //     }
-  //   } catch (error) {
-  //     res.status(500).json({ error: error.message });
-  //   }
-  // });
-  
   app.get('/questions/:id', async (req, res) => {
     try {
       const encodedId = req.params.id;
@@ -623,11 +515,44 @@ app.get("/subjects", async (req, res) => {
   });
 
   app.post("/adminreg", upload.single("profile"), adminreg);
+
+  app.post("/adminlogins", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      if (!email || !password) {
+
+        return res.status(400).send({ error: "invalid" });
+
+      }
+      const userlogin = await admin.findOne({ email: email });
+      if (userlogin) {
+        const isMatch = await bcrypt.compare(password, userlogin.password);
+        const token = await userlogin.generateAuthToken();
+        console.log("token", token);
+        res.cookie("jwttoken", "Aqeel", {
+          expires: new Date(Date.now() + 25892000000),
+          httpOnly: true,
+        });
+        ///create a cokki4res.cokkie
+        if (!isMatch) {
+          res.status(422).send({ message: "user error" });
+        } else {
+          res.redirect("/dashboard")
+          // res.send({ meassage: " wellcome user  login sucessfully" });
+        }
+      } else {
+        res.status(422).send({ message: "invalid" });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
   app.get("/admininfo", admininfo);
   app.get("/adminlists", admin_lists);
+
+
   app.get("/adminedit/:id", (req, res) => {
     let readquery = req.params.id;
-
     admin.findOne({ name: readquery }).then((x) => {
       res.render("updateadmin.hbs", { x });
     });
@@ -641,7 +566,6 @@ app.get("/subjects", async (req, res) => {
   app.get("/forgot", (req, res) => {
     res.render("forgot");
   });
-
   app.get("/imageques", (req, res) => {
     Promise.all([subjectmodel.find().lean().exec()]).then(
       ([select_subject]) => {
@@ -651,7 +575,6 @@ app.get("/subjects", async (req, res) => {
       }
     );
   });
-
   // Handle POST request for creating a new question
   app.post("/questions", upload.single("image"), (req, res) => {
     // Retrieve form data
@@ -669,8 +592,8 @@ app.get("/subjects", async (req, res) => {
       option3,
       option4,
       ans,
-    });
 
+    });
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/error messages.
       async.parallel(
@@ -695,7 +618,6 @@ app.get("/subjects", async (req, res) => {
       );
       return;
     }
-
     // Save the question to the database
     que.save(function (err) {
       if (err) {
@@ -705,9 +627,7 @@ app.get("/subjects", async (req, res) => {
       res.redirect("/imageques");
     });
   });
-
   ///////////////////////////////////Stored a Results////////////////
-
   // Create a new result
 
   app.post("/results", async (req, res) => {
