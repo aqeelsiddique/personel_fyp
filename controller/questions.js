@@ -23,11 +23,115 @@ const process_create_get1 = function (req, res, next) {
     });
   });
 };
+
+
+
+
 // Handle process create on POST.
+// const process_create_post1 = [
+//   // Validate fields.
+//   body("select_subject", "Machine must not be empty.")
+//     .isLength({ min: 1 })
+//     .trim(),
+//   body("ques", "Question must not be empty.").isLength({ min: 1 }).trim(),
+//   body("option1", "Option 1 must not be empty.").isLength({ min: 1 }).trim(),
+//   body("option2", "Option 2 must not be empty.").isLength({ min: 1 }).trim(),
+//   body("option3", "Option 3 must not be empty.").isLength({ min: 1 }).trim(),
+//   body("option4", "Option 4 must not be empty.").isLength({ min: 1 }).trim(),
+//   body("ans", "Answer must not be empty.").isLength({ min: 1 }).trim(),
+//   body("*").escape(),
+//   // Process request after validation and sanitization.
+//   (req, res, next) => {
+//     let results = {}; // Define an empty results object
+
+//     // Extract the validation errors from a request.
+//     const errors = validationResult(req);
+//     // Create a Process object with escaped and trimmed data.
+//     const process = new Question({
+//       select_subject: req.body.select_subject,
+//       ques: req.body.ques,
+//       option1: req.body.option1,
+//       option2: req.body.option2,
+//       option3: req.body.option3,
+//       option4: req.body.option4,
+//       ans: req.body.ans,
+//     });
+
+//     if (!errors.isEmpty()) {
+//       // There are errors. Render form again with sanitized values/error messages.
+//       async.parallel(
+//         {
+//           select_subject: function (callback) {
+//             subject.find(callback);
+//           },
+//         },
+//         function (err, results) {
+//           if (err) {
+//             return next(err);
+//           }
+//           results.select_subject = results.select_subject || []; // Make sure the results object has a select_subject property
+
+//           res.render("question", {
+//             title: "Create Process",
+//             select_subject: results.select_subject,
+//             process: process,
+//             errors: errors.array(),
+//           });
+//         }
+//       );
+//       return;
+//     } else {
+//       // Check if the question already exists in  database.
+//       // Check if the question already exists in the database.
+//       Question.findOne({
+//         ques: process.ques,
+//         select_subject: process.select_subject,
+//       }).exec(function (err, found_question) {
+//         if (err) {
+//           return next(err);
+//         }
+//         if (found_question) {
+//           // The question already exists in the database.
+//           async.parallel(
+//             {
+//               select_subject: function (callback) {
+//                 subject.find(callback);
+//               },
+//             },
+//             function (err, results) {
+//               if (err) {
+//                 return next(err);
+//               }
+//               results.select_subject = results.select_subject || []; // Make sure the results object has a select_subject property
+
+//               res.render("question", {
+//                 title: "Create Process",
+//                 select_subject: results.select_subject,
+//                 process: process,
+//                 error: "The question already exists in the database.",
+//               });
+//             }
+//           );
+//         } else {
+//           // The question does not exist in the database. Save process.
+//           process.save(function (err) {
+//             if (err) {
+//               return next(err);
+//             }
+//             //successful - redirect to new process record.
+//             res.redirect("/add_Question");
+//           });
+//         }
+//       });
+//     }
+//   },
+// ];
+
+
 const process_create_post1 = [
   // Validate fields.
-  body("select_subject", "Machine must not be empty.")
-    .isLength({ min: 1 })
+  body("select_subject", "Subject must not be empty.")
+   .isLength({ min: 1 })
     .trim(),
   body("ques", "Question must not be empty.").isLength({ min: 1 }).trim(),
   body("option1", "Option 1 must not be empty.").isLength({ min: 1 }).trim(),
@@ -36,92 +140,65 @@ const process_create_post1 = [
   body("option4", "Option 4 must not be empty.").isLength({ min: 1 }).trim(),
   body("ans", "Answer must not be empty.").isLength({ min: 1 }).trim(),
   body("*").escape(),
+
   // Process request after validation and sanitization.
-  (req, res, next) => {
-    let results = {}; // Define an empty results object
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
 
-    // Extract the validation errors from a request.
-    const errors = validationResult(req);
-    // Create a Process object with escaped and trimmed data.
-    const process = new Question({
-      select_subject: req.body.select_subject,
-      ques: req.body.ques,
-      option1: req.body.option1,
-      option2: req.body.option2,
-      option3: req.body.option3,
-      option4: req.body.option4,
-      ans: req.body.ans,
-    });
+      if (!errors.isEmpty()) {
+        // There are errors. Render form again with sanitized values/error messages.
+        const subjects = await subject.find();
+        res.render("question", {
+          title: "Create Process",
+          subjects: subjects,
+          process: req.body,
+          errors: errors.array(),
+        });
+        return;
+      }
 
-    if (!errors.isEmpty()) {
-      // There are errors. Render form again with sanitized values/error messages.
-      async.parallel(
-        {
-          select_subject: function (callback) {
-            subject.find(callback);
-          },
-        },
-        function (err, results) {
-          if (err) {
-            return next(err);
-          }
-          results.select_subject = results.select_subject || []; // Make sure the results object has a select_subject property
+      const { select_subject, ques, option1, option2, option3, option4, ans } = req.body;
 
-          res.render("question", {
-            title: "Create Process",
-            select_subject: results.select_subject,
-            process: process,
-            errors: errors.array(),
-          });
-        }
-      );
-      return;
-    } else {
-      // Check if the question already exists in  database.
       // Check if the question already exists in the database.
-      Question.findOne({
-        ques: process.ques,
-        select_subject: process.select_subject,
-      }).exec(function (err, found_question) {
-        if (err) {
-          return next(err);
-        }
-        if (found_question) {
-          // The question already exists in the database.
-          async.parallel(
-            {
-              select_subject: function (callback) {
-                subject.find(callback);
-              },
-            },
-            function (err, results) {
-              if (err) {
-                return next(err);
-              }
-              results.select_subject = results.select_subject || []; // Make sure the results object has a select_subject property
-
-              res.render("question", {
-                title: "Create Process",
-                select_subject: results.select_subject,
-                process: process,
-                error: "The question already exists in the database.",
-              });
-            }
-          );
-        } else {
-          // The question does not exist in the database. Save process.
-          process.save(function (err) {
-            if (err) {
-              return next(err);
-            }
-            //successful - redirect to new process record.
-            res.redirect("/add_Question");
-          });
-        }
+      const existingQuestion = await Question.findOne({
+        select_subject: select_subject,
+        ques: ques,
       });
+
+      if (existingQuestion) {
+        // The question already exists in the database.
+        const subjects = await subject.find();
+        res.render("question", {
+          title: "Create Process",
+          subjects: subjects,
+          process: req.body,
+          error: "The question already exists in the database.",
+        });
+      } else {
+        // The question does not exist in the database. Save the question.
+        const process = new Question({
+          select_subject: select_subject,
+          ques: ques,
+          option1: option1,
+          option2: option2,
+          option3: option3,
+          option4: option4,
+          ans: ans,
+        });
+
+        await process.save();
+
+        // Successful - redirect to the new question record.
+        res.redirect("/add_Question");
+      }
+    } catch (error) {
+      next(error);
     }
   },
 ];
+
+
 
 ////////////////test end
 // list of all Question.
@@ -253,9 +330,8 @@ const csvmcqfile = (req, res) => {
               });
           }
 
-          res
-            .status(200)
-            .json({ message: "File uploaded and data saved to MongoDB" });
+          res.redirect('/uploadcsv')
+           
         }
       );
     });
