@@ -6,7 +6,6 @@ const cors = require('cors');
 
 const fs = require('fs');
 const dotenv = require('dotenv');
-const connectDatabase = require('./config/database');
 // mongoose.connect('mongodb://localhost/local');
 var mongoose = require('mongoose');
 var express = require('express');
