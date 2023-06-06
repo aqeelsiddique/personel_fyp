@@ -24,9 +24,6 @@ const process_create_get1 = function (req, res, next) {
   });
 };
 
-
-
-
 // Handle process create on POST.
 // const process_create_post1 = [
 //   // Validate fields.
@@ -131,8 +128,7 @@ const process_create_get1 = function (req, res, next) {
 const process_create_post1 = [
   // Validate fields.
   body("select_subject", "Subject must not be empty.")
-   .isLength({ min: 1 })
-    .trim(),
+   .isLength({ min: 1 }),
   body("ques", "Question must not be empty.").isLength({ min: 1 }).trim(),
   body("option1", "Option 1 must not be empty.").isLength({ min: 1 }).trim(),
   body("option2", "Option 2 must not be empty.").isLength({ min: 1 }).trim(),
@@ -186,8 +182,9 @@ const process_create_post1 = [
           option4: option4,
           ans: ans,
         });
-
         await process.save();
+        console.log(select_subject)
+        console.log("test",process)
 
         // Successful - redirect to the new question record.
         res.redirect("/add_Question");
@@ -214,7 +211,7 @@ const question_list = function (req, res, next) {
         title: "question List",
         list_question: list_question,
       });
-      console.log(list_question);
+      // console.log(list_question);
     });
 };
 

@@ -116,6 +116,7 @@ const QuestionSchema = new mongoose.Schema({
   },
   subjectId: {
     type: mongoose.Types.ObjectId,
+    type: String,
     ref: 'testsubj'
   },
   correctOption: {

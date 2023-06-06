@@ -1,9 +1,9 @@
 <body>
-      {{> sidebars}}
+    {{> sidebars}}
 
-       {{> navbar}}
+    {{> navbar}}
 
-    
+
 </body>
 
 
@@ -66,33 +66,35 @@
                         <td>{{this.email}}</td>
 
 
-
-                        <td>  <a href="/edit/{{this.name}}" class="fa fa-edit" style="font-size:25px;color:rgb(80, 85, 87);"
-                                onclick="return confirm('Are you sure to update this record ?');"></a></td>
+<td>
+    
+</td>
+                        {{!-- <td> <a href="/edit/{{this.name}}" class="fa fa-edit"
+                                style="font-size:25px;color:rgb(80, 85, 87);"
+                                onclick="return confirm('Are you sure to update this record ?');"></a></td> --}}
                         <td>
-                            <div >
-                    
-                            <a href="/eventhead_team/{{_id}}" class="fa fa-trash" 
-                            style="font-size:25px;color:red";
-                                onclick="return confirm('Are you sure to update this record ?');"> </a>
+                            <div>
 
-                        
-                        
+                                <a href="/eventhead_team/{{_id}}" class="fa fa-trash" style="font-size:25px;color:red" ;
+                                    onclick="return confirm('Are you sure to update this record ?');"> </a>
+
+
+
                         </td>
 
-                            </div>
-                            
-                        {{!-- <td>
-                            <a href="/update_Question/{{this._id}}" class="edit" data-toggle="modal"><i
-                                    class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="/delete_Question/{{this._id}}" class="delete" data-toggle="modal"><i
-                                    class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                        </td>
-                    </tr> --}}
-
-                    {{/each}}
-                </tbody>
-            </table>
         </div>
+
+        {{!-- <td>
+            <a href="/update_Question/{{this._id}}" class="edit" data-toggle="modal"><i class="material-icons"
+                    data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+            <a href="/delete_Question/{{this._id}}" class="delete" data-toggle="modal"><i class="material-icons"
+                    data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+        </td>
+        </tr> --}}
+
+        {{/each}}
+        </tbody>
+        </table>
     </div>
+</div>
 </div>
