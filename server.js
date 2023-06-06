@@ -1,4 +1,3 @@
-var morgan = require('morgan');
 var bodyParser = require('body-parser');
 let methodoverwride = require('method-override');
 const hbs = require('handlebars');
@@ -74,7 +73,6 @@ mongoose
   .then(() => console.log('MongoDB connected successfully.'))
   .catch((err) => console.log('MongoDB connection error: ' + err));
 // app.use(express.static(__dirname+'/public'));
-app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
