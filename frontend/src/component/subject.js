@@ -33,7 +33,7 @@ function Subject() {
         dispatch(setSubject(id));
         navigate('/Quiz');
       })
-      .catch((err) => toast.error(err?.message || 'Something went wrong'));
+      .catch((err) => toast.error(err?.message || 'No MCQs Found'));
   };
   return (
     <>
@@ -68,14 +68,14 @@ function Subject() {
                   className="subj"
                   onClick={() => handleSubjectClick(subject?.name)}
                 >
-                  {subject.name}
+                  {subject.name.replace('_', ' ')}
                 </p>
               ))}
             </div>
           </div>
         </div>
         <div className="loop-count">
-          <p >{currentRound + 1}</p>
+          <p >Mcq No.{currentRound + 1}</p>
         </div>
       </div>
     </>

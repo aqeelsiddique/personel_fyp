@@ -7,6 +7,7 @@ const async = require("async");
 const question = require("../model/question");
 const fs = require('fs');
 const csv = require('csv-parser');
+const CheckedQuestion = require("../model/checkedquesionn");
 
 
 ///////////////////////////questions Portion COntroller Code /////////////////////Addmin site
@@ -334,11 +335,40 @@ const csvmcqfile = (req, res) => {
     });
 };
 
+// list of all Question.
+const checkedquestion_list = function (req, res, next) {
+  CheckedQuestion.find()
+    .lean()
+    .exec(function (err, list_question) {
+      if (err) {
+        return next(err);
+      }
+      // Successful, so render.
+      res.render("checkquestion_lists.hbs", {
+        title: "question List",
+        list_question: list_question,
+      });
+      // console.log(list_question);
+    });
+};
+// Delete a user with specified user id in the request
+const deletcheckequestion = (req, res) => {
+  CheckedQuestion.findByIdAndDelete(req.params.id, (err, doc) => {
+    if (!err) {
+      res.redirect("/checkquestionlists");
+    } else {
+      console.log("Error while deleting", err);
+    }
+  });
+};
+
 module.exports = {
   question_list,
   updatequestion,
   deletequestion,
   process_create_post1,
   process_create_get1,
-  csvmcqfile
+  csvmcqfile,
+  checkedquestion_list,
+  deletcheckequestion
 };

@@ -301,6 +301,9 @@ app.get("/subjects", async (req, res) => {
   app.get("/add_Question", controller.process_create_get1);
   app.post("/add_Question", Controller.process_create_post1);
   app.get("/questionlists", controller.question_list);
+  app.get("/checkquestionlists", controller.checkedquestion_list);
+  app.get("/delete_checkQuestion/:id", controller.deletcheckequestion);
+
 
   app.get("/questions", async (req, res) => {
     const questions = await question.find();
@@ -359,6 +362,7 @@ app.get("/subjects", async (req, res) => {
   });
 
   app.get("/delete_Question/:id", controller.deletequestion);
+
   //////////////////////End of Question portion////////////////////////
 
   ///////////////////////////////////////Team Section/////////////////////////////

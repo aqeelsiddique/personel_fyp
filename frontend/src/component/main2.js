@@ -98,10 +98,10 @@ const Main = () => {
             dispatch(setTotalRounds(totalRounds));
             dispatch(setRoundSelected(selectedRound));
             dispatch(setTime(Number.parseInt(maxTime)));
-            toast.success('Fetched Successfully');
+            toast.success('Successfully Selected');
             navigate('/start');
           })
-          .catch((err) => toast.error(err?.message || 'Something went wrong'));
+          .catch((err) => toast.error(err?.message || 'Something went '));
       } else {
         throw new Error('Please select all options.');
       }
@@ -157,7 +157,7 @@ const Main = () => {
                       value={noMcqs}
                       onChange={(e) => setNoMcqs(e.target.value)}
                       min={1}
-                      // max={10}
+                      max={5}
                       style={{ width: "100%", margin: "0px 5px" }}
                     />
                     {/* <div onClick={increment}>+</div> */}
@@ -166,7 +166,7 @@ const Main = () => {
                 
                 
                 <Form.Group className="mb-4">
-                  <Form.Label>Number Of Mcqs</Form.Label>
+                  <Form.Label>Set Timer for Each Mcq</Form.Label>
                   <div>
                     {/* <div onClick={decrement}>-</div> */}
                     <Form.Control
@@ -174,7 +174,8 @@ const Main = () => {
                       type="number"
                       value={maxTime}
                       onChange={(e) => setMaxTime(e.target.value)}
-                      min={1}
+                      min={10}
+                      max={60}
                       // max={10}
                       style={{ width: "100%", margin: "0px 5px" }}
                     />

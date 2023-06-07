@@ -121,7 +121,7 @@ label {
   color: rgb(191, 192, 197);
   font-size: 1.5rem;
   padding: 1rem 0rem;
-  width: 250px;
+  width: 300px;
   height: 70px;
   border-radius: 1rem;
   box-shadow: 1px 1px 7px 2px rgb(202, 200, 200);
@@ -138,6 +138,7 @@ label {
   color: blueviolet;
   cursor: pointer;
 }
+
 .subject .sub .sub-content .subj a:hover {
   color: white;
 }
