@@ -17,11 +17,13 @@ exports.round_create_post = [
     const rounds = new round({ roundname: req.body.roundname });
     if (!errors.isEmpty()) {
       // There are errors. Render the form again with sanitized values/error messages.
-      res.render("round.hbs", {
-        //   title: 'Create Subject',
-        rounds: rounds,
-        errors: errors.array(),
-      });
+      // res.redirect("/Addround", {
+      //   //   title: 'Create Subject',
+      //   rounds: rounds,
+      //   errors: errors.array(),
+      // });
+      res.redirect("/Addround");
+      console.log(rounds)
       return;
     } else {
       // Data from form is valid.
@@ -38,7 +40,7 @@ exports.round_create_post = [
             // res.redirect(category.url);
             // alert("message")
 
-            res.render("round.hbs");
+            res.redirect("/Addround");
             console.log(rounds);
           });
         }
