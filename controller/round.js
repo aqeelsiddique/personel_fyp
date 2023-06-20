@@ -1,6 +1,20 @@
 const { body, validationResult } = require("express-validator");
 const round = require("../model/round");
 
+
+
+//////Add a Subject 
+exports.addround = function(req, res) {
+  res.render("round.hbs", {
+    roundttitle: "Add a Round",
+  });
+
+
+}
+
+
+
+
 // Handle Category create on POST.
 exports.round_create_post = [
   // Validate that the name field is not empty.
@@ -82,6 +96,12 @@ exports.delround = (req, res) => {
     }
   });
 };
+// exports.editround = function (req, res) {
+//   let readquery = req.params.id;
+//   round.findOne({ roundname: readquery }).then((x) => {
+//     res.render("roundupdate.hbs", { x });
+//   });
+// }
 
 exports.roundupdate = function (req, res) {
   let readquery = req.params.id;

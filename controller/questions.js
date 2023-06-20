@@ -25,6 +25,7 @@ const process_create_get1 = function (req, res, next) {
   });
 };
 
+
 // Handle process create on POST.
 // const process_create_post1 = [
 //   // Validate fields.
@@ -215,6 +216,13 @@ const question_list = function (req, res, next) {
       // console.log(list_question);
     });
 };
+const filterquestion = async (req, res) => {
+  const subjectId = req.params.id;
+    const questions = await question.find({ select_subject: subjectId });
+    // render the subjectwiseque.hbs template and pass the questions data as a variable
+    res.render("subjectwiseque.hbs", { questions });
+
+}
 
 ///////////////Update A data
 const updatequestion = (req, res) => {
@@ -370,5 +378,6 @@ module.exports = {
   process_create_get1,
   csvmcqfile,
   checkedquestion_list,
-  deletcheckequestion
+  deletcheckequestion,
+  filterquestion
 };

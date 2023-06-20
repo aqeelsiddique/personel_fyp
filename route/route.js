@@ -43,6 +43,8 @@ const {
   round_list,
   delround,
   roundupdate,
+  addround,
+  editround,
 } = require("../controller/round");
 
 const round = require("../model/round");
@@ -91,17 +93,9 @@ module.exports = function (app) {
     });
   });
 
-  // Handle form submission
-  //////////////////////end test code////////
 
-  // Retrieve all documents in the 'images' collection
-  // image.find().toArray(function(err, documents) {
-  //   if (err) throw err;
+  
 
-  //   // Render the 'home' template and pass in the array of images as data
-  //   res.render('image', { images: documents });
-
-  // });
 
   // Define the file upload endpoint
 
@@ -109,22 +103,11 @@ module.exports = function (app) {
   app.get("/dashboard", dashboard.eventhead_list);
 
   //////////////////////////////Final Round wise team enter to DB code
-  app.get("/Addround", (req, res) => {
-    res.render("round.hbs", {
-      roundttitle: "Add a Round",
-    });
-  });
+  app.get("/Addround", addround)
   app.post("/Addround", round_create_post);
   app.get("/list_rounds", round_list);
   app.get("/delround/:id", delround);
-  app.put("/editround/:id", roundupdate);
-  
-  app.get("/editround/:id", (req, res) => {
-    let readquery = req.params.id;
-    round.findOne({ roundname: readquery }).then((x) => {
-      res.render("roundupdate.hbs", { x });
-    });
-  });
+  app.get("/editround/:id", roundupdate)
   /////////////////for react js///////////////////////////////////
   app.get("/rounds", async (req, res) => {
     try {
@@ -178,6 +161,8 @@ module.exports = function (app) {
     res.render("schedulewiseteams.hbs", { teamsByRound });
     console.log(teamsByRound);
   });
+////////////////////////end/////////////////////////////
+
 
   //////////////////////Subject Wise question show
   app.get("/filterquestion", async (req, res) => {
@@ -193,30 +178,7 @@ module.exports = function (app) {
   });
 
   // route handler for /filterquestion/:id
-  app.get("/filterquestion/:id", async (req, res) => {
-    const subjectId = req.params.id;
-    const questions = await question.find({ select_subject: subjectId });
-
-    // render the subjectwiseque.hbs template and pass the questions data as a variable
-    res.render("subjectwiseque.hbs", { questions });
-  });
-////////////////////original//////////////////
-  // app.get('/questions/:id', async (req, res) => {
-  //   try {
-  //     const encodedId = req.params.id;
-  //     const subjectId = decodeURI(encodedId);
-  //     let questions;
-  //     if (subjectId) {
-  //       questions = await question.find({ select_subject: subjectId });
-
-  //     } else {
-  //       throw new Error('No questions found');
-  //     }
-  //     res.status(200).send(questions);
-  //   } catch (error) {
-  //     res.status(500).send(error);
-  //   }
-  // });
+  app.get("/filterquestion/:id", controller.filterquestion)
   app.get('/questions/:id', async (req, res) => {
     try {
       const encodedId = req.params.id;
