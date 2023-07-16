@@ -633,6 +633,12 @@ app.get("/subjects", async (req, res) => {
 
 
 
+
+
+
+
+
+  
 app.get('/weather', (req, res) => {
 	let city = req.query.city;
 	var request = require('request');
