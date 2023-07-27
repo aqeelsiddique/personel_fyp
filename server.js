@@ -2,7 +2,6 @@ var bodyParser = require('body-parser');
 let methodoverwride = require('method-override');
 const hbs = require('handlebars');
 const cors = require('cors');
-
 const fs = require('fs');
 const dotenv = require('dotenv');
 // mongoose.connect('mongodb://localhost/local');
@@ -46,9 +45,7 @@ app.engine(
     },
   })
 );
-
 // const partialsPath  = path.join(__dirname, "../views/partials")
-
 app.set('view engine', '.hbs');
 app.use(express.static(path.join(__dirname, './public')));
 hbs.registerPartial(
@@ -59,11 +56,15 @@ hbs.registerPartial(
   'event_headlists',
   fs.readFileSync('./views/partials/event_headlists.hbs', 'utf8')
 );
-
+mongoose.set('strictQuery', false);
 ////database connection////
+// database connection
 const db =
   process.env.MONGODB_URI ||
-  'mongodb+srv://Aqeel:aqeel12345@cluster0.uhg7y9z.mongodb.net/visiosparkwebsite?retryWrites=true&w=majority';
+  'mongodb://localhost:27017/E_commerc';
+
+// Add this line to set 'strictQuery' to false before connecting
+// mongoose.set('strictQuery', false);
 // Connect to MongoDB instance
 mongoose
   .connect(db, {
@@ -71,14 +72,14 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => console.log('MongoDB connected successfully.'))
-  .catch((err) => console.log('MongoDB connection error: ' + err));
+  .catch((err) => console.log('MongoDB connection error: ' + err)); 
 // app.use(express.static(__dirname+'/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-
 //Endpoints
 const port = process.env.PORT || 4001;
 app.listen(port, () => console.log(`Server started on port: ${port}`));
+
 require('./route/route')(app);
